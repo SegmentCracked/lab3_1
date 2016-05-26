@@ -1,9 +1,10 @@
-package Paper;
+package paper;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import Anwser.Answer;
+import answer.Answer;
 
 public class Record {
 	
@@ -25,7 +26,7 @@ public class Record {
 		this.personName = personName;
 	}
 	
-	public void addAnwser(Answer answer){
+	public void addAnswer(Answer answer){
 		answerList.add(answer);
 	}
 	
@@ -66,7 +67,7 @@ public class Record {
 		}
 
 		@Override
-		public Anwser.Answer next() {
+		public answer.Answer next() {
 			// TODO Auto-generated method stub
 			return answerList.get(answerIndex++);
 		}

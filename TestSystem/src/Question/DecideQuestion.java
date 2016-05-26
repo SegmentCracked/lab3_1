@@ -1,7 +1,7 @@
-package Question;
+package question;
 
-import Anwser.Answer;
-import Anwser.DecideAnswer;
+import answer.Answer;
+import answer.DecideAnswer;
 
 public class DecideQuestion extends PromptQuestion {
 	DecideAnswer answer;

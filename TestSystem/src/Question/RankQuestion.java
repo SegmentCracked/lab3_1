@@ -1,10 +1,10 @@
-package Question;
+package question;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import Anwser.Answer;
-import Anwser.RankAnswer;
+import answer.Answer;
+import answer.RankAnswer;
 
 public class RankQuestion extends ItemQuestion {
 	

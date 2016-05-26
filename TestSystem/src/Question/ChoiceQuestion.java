@@ -1,10 +1,10 @@
-package Question;
+package question;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import Anwser.Answer;
-import Anwser.ChoiceAnswer;
+import answer.Answer;
+import answer.ChoiceAnswer;
 
 public class ChoiceQuestion extends ItemQuestion {
 	List<String> items = new LinkedList<String>();

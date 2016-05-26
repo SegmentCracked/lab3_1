@@ -1,9 +1,9 @@
-package View;
+package view;
 
 import java.util.List;
 import java.util.Scanner;
 
-import Control.Control;
+import control.Control;
 
 public class ComandView {
 	Control control = new Control();
@@ -319,7 +319,7 @@ public class ComandView {
 	}
 	
 	public void addQuestion(){
-		System.out.println("1. add a new Question\n"
+		System.out.println("1. add a new question\n"
 				+ "2. compele this page\n");
 		int next = sc.nextInt();
 		if(next == 1){

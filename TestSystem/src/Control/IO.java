@@ -1,4 +1,4 @@
-package Control;
+package control;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,26 +15,25 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import Anwser.Answer;
-import Anwser.ChoiceAnswer;
-import Anwser.DecideAnswer;
-import Anwser.MapAnswer;
-import Anwser.RankAnswer;
-import Anwser.TextAnswer;
-import Paper.Iterator;
-import Paper.Page;
-import Paper.Record;
-import Paper.Survey;
-import Paper.Test;
-import Question.ChoiceQuestion;
-import Question.DecideQuestion;
-import Question.EssayQuestion;
-import Question.ItemQuestion;
-import Question.MapQuestion;
-import Question.PromptQuestion;
-import Question.Question;
-import Question.RankQuestion;
-import Question.ShortEssayQuestion;
+import answer.Answer;
+import answer.ChoiceAnswer;
+import answer.DecideAnswer;
+import answer.MapAnswer;
+import answer.RankAnswer;
+import answer.TextAnswer;
+import paper.Page;
+import paper.Record;
+import paper.Survey;
+import paper.Test;
+import question.ChoiceQuestion;
+import question.DecideQuestion;
+import question.EssayQuestion;
+import question.ItemQuestion;
+import question.MapQuestion;
+import question.PromptQuestion;
+import question.Question;
+import question.RankQuestion;
+import question.ShortEssayQuestion;
 
 public class IO {
 	SAXBuilder builder = new SAXBuilder();

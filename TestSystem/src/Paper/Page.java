@@ -1,11 +1,12 @@
-package Paper;
+package paper;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import Question.Question;
+import question.Question;
 
-public class Page {
+public abstract class Page {
 	
 	String pageName;
 	String type;
@@ -32,10 +33,6 @@ public class Page {
 		}
 	}
 	
-	public List<Question> getQuestionList(){
-		return questionList;
-	}
-	
 	public int getQuestionSize(){
 		return questionList.size();
 	}
@@ -52,7 +49,7 @@ public class Page {
 		return new IteratorQuestion();
 	}
 	
-	class IteratorQuestion implements Iterator<Question>{
+	class IteratorQuestion implements Iterator<Question> {
 		int questionIndex;
 
 		@Override

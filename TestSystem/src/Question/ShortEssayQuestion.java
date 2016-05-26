@@ -1,7 +1,7 @@
-package Question;
+package question;
 
-import Anwser.Answer;
-import Anwser.TextAnswer;
+import answer.Answer;
+import answer.TextAnswer;
 
 public class ShortEssayQuestion extends PromptQuestion {
 	

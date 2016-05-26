@@ -1,10 +1,10 @@
-package Question;
+package question;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import Anwser.Answer;
-import Anwser.MapAnswer;
+import answer.Answer;
+import answer.MapAnswer;
 
 public class MapQuestion extends Question {
 	
