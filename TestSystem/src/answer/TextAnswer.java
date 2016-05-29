@@ -11,9 +11,9 @@ public class TextAnswer implements Answer{
 	}
 
 	@Override
-	public void setAnswer(String anwser) {
+	public void setAnswer(String answer) {
 		// TODO Auto-generated method stub
-		text = anwser;
+		text = answer;
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class TextAnswer implements Answer{
 
 	@Override
 	public int getType() {
-		return 2;
+		return AnswerFactory.AnswerType.TEXT;
 	}
 
 	@Override

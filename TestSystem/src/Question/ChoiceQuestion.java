@@ -38,7 +38,7 @@ public class ChoiceQuestion extends ItemQuestion {
 	
 	@Override
 	public String getQuestion(){
-		String ret = "ChoiceQuestion: "+prompt+"\n";
+		String ret = "question.ChoiceQuestion: "+prompt+"\n";
 		for(int i=0; i<items.size(); i++){
 			ret += items.get(i)+"\n";
 		}

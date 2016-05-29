@@ -27,11 +27,11 @@ public class ChoiceAnswer implements Answer{
 	}
 	
 	@Override
-	public void setAnswer(String anwser) {
+	public void setAnswer(String answer) {
 		// TODO Auto-generated method stub
-		String[] anwsers = anwser.split(" ");
+		String[] anwsers = answer.split(" ");
 		this.anwser = new int[anwsers.length];
-		for(int i=0; i<anwser.length(); i++){
+		for(int i=0; i<answer.length(); i++){
 			this.anwser[i] = Integer.parseInt(anwsers[i]);
 		}
 	}
@@ -42,7 +42,7 @@ public class ChoiceAnswer implements Answer{
 
 	@Override
 	public int getType() {
-		return 1;
+		return AnswerFactory.AnswerType.CHOICE;
 	}
 
 	@Override

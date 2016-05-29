@@ -5,22 +5,22 @@ import java.util.Scanner;
 
 import control.Control;
 
-public class ComandView {
+public class CommandView {
 	Control control = new Control();
 	Scanner sc = new Scanner(System.in);
 	int type;
 	
 	public void printFirstMenu(){
-		System.out.println("1) Create a new Survey\n"
-				+ "2) Create a new Test\n"
-				+ "3) Display Survey\n"
-				+ "4) Display a Test \n"
-				+ "5) Save a Survey\n"
-				+ "6) Save a Test \n"
-				+ "7) Modify a Survey\n"
-				+ "8) Modify a Test\n"
-				+ "9) Take a Survey\n"
-				+ "10)Take a Test\n"		
+		System.out.println("1) Create a new paper.Survey\n"
+				+ "2) Create a new paper.Test\n"
+				+ "3) Display paper.Survey\n"
+				+ "4) Display a paper.Test \n"
+				+ "5) Save a paper.Survey\n"
+				+ "6) Save a paper.Test \n"
+				+ "7) Modify a paper.Survey\n"
+				+ "8) Modify a paper.Test\n"
+				+ "9) Take a paper.Survey\n"
+				+ "10)Take a paper.Test\n"
 				+ "11)Look survey outcome\n"
 				+ "12)Look test outcome\n"
 				+ "13) Quit\n"

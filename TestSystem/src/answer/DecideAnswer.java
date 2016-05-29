@@ -13,9 +13,9 @@ public class DecideAnswer implements Answer{
 
 
 	@Override
-	public void setAnswer(String anwser) {
+	public void setAnswer(String answer) {
 		// TODO Auto-generated method stub
-		this.anwser = Integer.parseInt(anwser);
+		this.anwser = Integer.parseInt(answer);
 	}
 
 
@@ -28,7 +28,7 @@ public class DecideAnswer implements Answer{
 
 	@Override
 	public int getType() {
-		return 0;
+		return AnswerFactory.AnswerType.DECIDE;
 	}
 
 

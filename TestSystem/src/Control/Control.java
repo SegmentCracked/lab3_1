@@ -1,16 +1,8 @@
 package control;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import answer.Answer;
-import answer.ChoiceAnswer;
-import answer.DecideAnswer;
-import answer.MapAnswer;
-import answer.RankAnswer;
-import answer.TextAnswer;
+import answer.*;
 import paper.Page;
 import paper.Record;
 import paper.Survey;
@@ -121,7 +113,7 @@ public class Control {
 	}
 	
 	public int modify(int index){
-		if(index >= page.getQuestionList().size()){
+		if(index >= page.getQuestionSize()){
 			return -1;
 		}else{
 			question = page.getQuestion(index);
@@ -234,21 +226,21 @@ public class Control {
 	}		
 	
 	public boolean remove(int index){
-		if(question.getType() == 5){
+		if(question.getType() == AnswerFactory.AnswerType.MAP){
 			return ((MapQuestion)question).remove(index);
 		}
 		return ((ItemQuestion)question).remove(index);
 	}
 	
 	public boolean changeItem(int index, String item){
-		if(question.getType() == 5){
+		if(question.getType() == AnswerFactory.AnswerType.MAP){
 			return ((MapQuestion)question).changeItem(index, item);		
 		}
 		return ((ItemQuestion)question).changeItem(index, item);
 	}
 	
 	public boolean changeItemNumber(int num){
-		if(question.getType() == 5){
+		if(question.getType() == AnswerFactory.AnswerType.MAP){
 			return ((MapQuestion)question).changeItemNumber(num);		
 		}
 		return ((ItemQuestion)question).changeItemNumber(num);
@@ -274,29 +266,10 @@ public class Control {
 	}
 	
 	public void answerQuestion(String answer){
-		switch(question.getType()){
-		case 0: DecideAnswer decide = new DecideAnswer();
-				decide.setAnswer(answer);
-				record.addAnwser(decide);
-				break;
-		case 1: ChoiceAnswer choice = new ChoiceAnswer();
-				choice.setAnswer(answer);
-				record.addAnwser(choice);
-				break;
-		case 2:
-		case 3:	TextAnswer text = new TextAnswer();
-				text.setAnswer(answer);
-				record.addAnwser(text);
-				break;
-		case 4: RankAnswer rank = new RankAnswer();
-				rank.setAnswer(answer);
-				record.addAnwser(rank);
-				break;
-		case 5: MapAnswer map = new MapAnswer();
-				map.setAnswer(answer);
-				record.addAnwser(map);
-				break;
-		}
+		AnswerFactory factory = new AnswerFactory();
+		Answer answerObject = factory.createAnswer(question.getType());
+		answerObject.setAnswer(answer);
+		record.addAnswer(answerObject);
 	}
 	
 	public void saveAnswer(){

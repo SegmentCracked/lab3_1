@@ -48,7 +48,7 @@ public class MapAnswer implements Answer{
 
 	@Override
 	public int getType() {
-		return 5;
+		return AnswerFactory.AnswerType.MAP;
 	}
 
 

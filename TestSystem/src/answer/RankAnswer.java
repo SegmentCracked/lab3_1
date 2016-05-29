@@ -43,8 +43,7 @@ public class RankAnswer implements Answer{
 
 	@Override
 	public int getType() {
-		// TODO Auto-generated method stub
-		return 4;
+		return AnswerFactory.AnswerType.RANK;
 	}
 
 	@Override

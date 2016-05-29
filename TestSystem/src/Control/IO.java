@@ -6,8 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import answer.*;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -15,12 +18,6 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import answer.Answer;
-import answer.ChoiceAnswer;
-import answer.DecideAnswer;
-import answer.MapAnswer;
-import answer.RankAnswer;
-import answer.TextAnswer;
 import paper.Page;
 import paper.Record;
 import paper.Survey;
@@ -233,23 +230,23 @@ public class IO {
 			map.setScore(Integer.parseInt(question.getChildText("score")));
 		}
 		if(question.getAttributeValue("answer").equals("1")){
-			map.setAnswer(question.getChildText("answer"));						
+			map.setAnswer(question.getChildText("answer"));
 		}
 		return map;
 	}
 	
 	public void writePage(Page page){
-		Element root = new Element("Page");
+		Element root = new Element("paper.Page");
 		root.setAttribute("type", page.getType());
 		root.addContent(new Element("pageName").setText(page.getPageName()));
 		if(page.getType().equals("test")){
 			root.addContent(new Element("score").setText(((Test)page).getTotalScore()+""));
 		}
 		
-		List<Question> questionList = page.getQuestionList();
+		//List<Question> questionList = page.getQuestionList();
 		Element questions = new Element("questions");
-		for(int i=0; i<questionList.size(); i++){
-			Question question = questionList.get(i);
+		for(int i=0; i<page.getQuestionSize(); i++){
+			Question question = page.getQuestion(i);
 			Element qe = null;
 			switch(question.getType()){
 			case 0: qe = this.savePromptQuestion(question);break;
@@ -440,7 +437,7 @@ public class IO {
 	}
 	
 	public void writeRecord(String recordName, Record record){
-		Element root = new Element("Record");
+		Element root = new Element("paper.Record");
 		Element personName = new Element("PersonName");
 		personName.setText(record.getPersonName());
 		root.addContent(personName);
@@ -503,31 +500,14 @@ public class IO {
 		Element answers = root.getChild("answers");
 		List<Element> answerList = answers.getChildren();
 		System.out.println(answerList.size());
+
 		for(int i=0; i<answerList.size(); i++){
 			Element answer = answerList.get(i);
 			int type = Integer.parseInt(answer.getAttributeValue("type"));
-			switch(type){
-			case 0: DecideAnswer decide = new DecideAnswer();
-					decide.setAnswer(answer.getText());
-					record.addAnwser(decide);
-					break;
-			case 1: ChoiceAnswer choice = new ChoiceAnswer();
-					choice.setAnswer(answer.getText());
-					record.addAnwser(choice);
-					break;
-			case 2: TextAnswer text = new TextAnswer();
-					text.setAnswer(answer.getText());
-					record.addAnwser(text);
-					break;
-			case 4: RankAnswer rank = new RankAnswer();
-					rank.setAnswer(answer.getText());
-					record.addAnwser(rank);
-					break;
-			case 5: MapAnswer map = new MapAnswer();
-					map.setAnswer(answer.getText());
-					record.addAnwser(map);
-					break;
-			}
+			AnswerFactory factory = new AnswerFactory();
+			Answer answerObject = factory.createAnswer(type);
+			answerObject.setAnswer(answer.getText());
+			record.addAnswer(answerObject);
 		}
 		return record;
 	}
