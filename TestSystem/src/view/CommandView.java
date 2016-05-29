@@ -87,7 +87,7 @@ public class CommandView {
 		int next  = control.modify(index);
 		switch(next){
 		case 0:this.modifyTFQuestion();break;
-		case 1:this.modifyChooicQuestion();break;
+		case 1:this.modifyChooiwpcQuestion();break;
 		case 2:this.modifyTFQuestion();break;
 		case 3:this.modifyEssayQuestion();break;
 		case 4:this.modifyRankQuestion();break;
@@ -115,7 +115,7 @@ public class CommandView {
 		}
 	}
 	
-	public void modifyChooicQuestion(){
+	public void modifyChooiwpcQuestion(){
 		Scanner scan = new Scanner(System.in);
 		System.out.println("1.modify the prompt\n"	
 				+"2.modify the number of choices available\n"	
