@@ -1,8 +1,6 @@
 package gui.questionframe;
 
-import question.ChoiceQuestion;
-import question.DecideQuestion;
-import question.Question;
+import question.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,6 +61,12 @@ public abstract class QuestionFrame extends JDialog{
         }
         if (question instanceof ChoiceQuestion){
             ret = new ChoiceQuestionFrame(hasAnswer);
+        }
+        if (question instanceof RankQuestion){
+            ret = new RankQuestionFrame(hasAnswer);
+        }
+        if (question instanceof MapQuestion){
+            ret = new MapQuestionFrame(hasAnswer);
         }
         if (ret!=null){
             ret.setQuestion(question);

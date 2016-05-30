@@ -1,7 +1,7 @@
 package gui.questionframe;
 
-import question.ChoiceQuestion;
 import question.Question;
+import question.RankQuestion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +13,8 @@ import java.awt.event.WindowEvent;
 /**
  * Created by Mengxiao Lin on 2016/5/30.
  */
-public class ChoiceQuestionFrame extends QuestionFrame {
-    private ChoiceQuestion question;
+public class RankQuestionFrame extends QuestionFrame {
+    private RankQuestion question;
     private JTextField promptTextField;
     private ItemList itemList;
     private JPanel createMainPanel(){
@@ -25,13 +25,14 @@ public class ChoiceQuestionFrame extends QuestionFrame {
         topPanel.add(promptTextField);
         topPanel.add(new JLabel("Choices:"));
         ret.add(topPanel,BorderLayout.NORTH);
-        itemList = new ItemList(ChoiceQuestionFrame.this);
+        itemList = new ItemList(RankQuestionFrame.this);
         ret.add(itemList.getList(), BorderLayout.CENTER);
         return ret;
     }
-    public ChoiceQuestionFrame(boolean hasAnswer) {
+    public RankQuestionFrame(boolean hasAnswer) {
         super(hasAnswer);
-        question = new ChoiceQuestion();
+        promptTextField = new JTextField();
+        setQuestion(new RankQuestion());
         setLayout(new BorderLayout());
         add(createBottomPanel(), BorderLayout.SOUTH);
         add(createMainPanel(),BorderLayout.CENTER);
@@ -39,7 +40,7 @@ public class ChoiceQuestionFrame extends QuestionFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 question=null;
-                ChoiceQuestionFrame.this.setVisible(false);
+                RankQuestionFrame.this.setVisible(false);
             }
         });
         finishBtn.addActionListener(new ActionListener() {
@@ -50,7 +51,7 @@ public class ChoiceQuestionFrame extends QuestionFrame {
                 for (int i=0;i<itemList.getListModel().size();++i){
                     question.addItem(itemList.getListModel().get(i));
                 }
-                ChoiceQuestionFrame.this.setVisible(false);
+                RankQuestionFrame.this.setVisible(false);
             }
         });
         addWindowListener(new WindowAdapter() {
@@ -60,7 +61,7 @@ public class ChoiceQuestionFrame extends QuestionFrame {
             }
         });
         setMinimumSize(new Dimension(300,200));
-        setTitle("Choice Question");
+        setTitle("Rank Question");
         pack();
     }
 
@@ -71,7 +72,8 @@ public class ChoiceQuestionFrame extends QuestionFrame {
 
     @Override
     public void setQuestion(Question questionToShow) {
-        this.question=(ChoiceQuestion) questionToShow;
+        this.question= (RankQuestion)questionToShow;
+        promptTextField.setText(this.question.getPrompt());
         this.promptTextField.setText(this.question.getPrompt());
         java.util.List<String> items = this.question.getItem();
         for (String s: items){

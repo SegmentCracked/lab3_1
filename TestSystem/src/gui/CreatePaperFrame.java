@@ -1,8 +1,6 @@
 package gui;
 
-import gui.questionframe.ChoiceQuestionFrame;
-import gui.questionframe.DecideQuestionFrame;
-import gui.questionframe.QuestionFrame;
+import gui.questionframe.*;
 import question.DecideQuestion;
 import question.Question;
 
@@ -11,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by Mengxiao Lin on 2016/5/30.
@@ -18,6 +17,25 @@ import java.awt.event.WindowEvent;
 public class CreatePaperFrame extends JFrame {
     private JList<QuestionAdapter> questionList;
     private DefaultListModel<QuestionAdapter> questionListModel;
+    private ActionListener questionBtnListenerFactory(Class frameClass, boolean hasAnswer){
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                QuestionFrame d = null;
+                try {
+                    d = (QuestionFrame)frameClass.getConstructor(boolean.class).newInstance(hasAnswer);
+                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e1) {
+                    e1.printStackTrace();
+                    return;
+                }
+                d.setLocationRelativeTo(CreatePaperFrame.this);
+                d.setVisible(true);
+                if (d.getQuestion() != null){
+                    questionListModel.addElement(new QuestionAdapter(d.getQuestion()));
+                }
+            }
+        };
+    }
     private JPopupMenu buildAddQuestionMenu(){
         JPopupMenu addQuestionMenu = new JPopupMenu("Add Question");
         JMenuItem decideQuestionBtn = new JMenuItem("Decide Question");
@@ -27,33 +45,15 @@ public class CreatePaperFrame extends JFrame {
         JMenuItem essayQuestionBtn = new JMenuItem("Essay Question");
         JMenuItem mapQuestionBtn = new JMenuItem("Map Question");
         addQuestionMenu.add(decideQuestionBtn);
-        decideQuestionBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DecideQuestionFrame d = new DecideQuestionFrame(false);
-                d.setLocationRelativeTo(CreatePaperFrame.this);
-                d.setVisible(true);
-                if (d.getQuestion() != null){
-                    questionListModel.addElement(new QuestionAdapter(d.getQuestion()));
-                }
-            }
-        });
+        decideQuestionBtn.addActionListener(questionBtnListenerFactory(DecideQuestionFrame.class, false));
         addQuestionMenu.add(choiceQuestionBtn);
-        choiceQuestionBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ChoiceQuestionFrame d= new ChoiceQuestionFrame(false);
-                d.setLocationRelativeTo(CreatePaperFrame.this);
-                d.setVisible(true);
-                if (d.getQuestion() !=null){
-                    questionListModel.addElement(new QuestionAdapter(d.getQuestion()));
-                }
-            }
-        });
+        choiceQuestionBtn.addActionListener(questionBtnListenerFactory(ChoiceQuestionFrame.class, false));
         addQuestionMenu.add(rankQuestionBtn);
+        rankQuestionBtn.addActionListener(questionBtnListenerFactory(RankQuestionFrame.class, false));
         addQuestionMenu.add(shortEssayQuestionBtn);
         addQuestionMenu.add(essayQuestionBtn);
         addQuestionMenu.add(mapQuestionBtn);
+        mapQuestionBtn.addActionListener(questionBtnListenerFactory(MapQuestionFrame.class, false));
         return addQuestionMenu;
     }
     private ActionListener createMoveBtnActionListener(boolean isUp){
