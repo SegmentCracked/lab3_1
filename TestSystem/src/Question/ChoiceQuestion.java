@@ -9,13 +9,18 @@ import answer.ChoiceAnswer;
 public class ChoiceQuestion extends ItemQuestion {
 	List<String> items = new LinkedList<String>();
 	ChoiceAnswer answer;
-	
+
+	@Override
+	public void clearItem() {
+		items.clear();
+	}
+
 	public ChoiceQuestion(){
 		super(1);
 	}
 	
 	@Override
-	public void setItem(String item) {
+	public void addItem(String item) {
 		this.items.add(item);
 	}
 

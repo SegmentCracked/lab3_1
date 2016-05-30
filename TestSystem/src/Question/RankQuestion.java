@@ -10,13 +10,18 @@ public class RankQuestion extends ItemQuestion {
 	
 	RankAnswer answer;
 	List<String> items = new LinkedList<String>();
-	
+
+	@Override
+	public void clearItem() {
+		items.clear();
+	}
+
 	public RankQuestion(){
 		super(4);
 	}
 	
 	@Override
-	public void setItem(String item) {
+	public void addItem(String item) {
 		items.add(item);		
 	}
 

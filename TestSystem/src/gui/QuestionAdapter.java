@@ -1,4 +1,4 @@
-package gui.listadapter;
+package gui;
 
 import question.Question;
 
@@ -10,6 +10,10 @@ public class QuestionAdapter {
 
     public QuestionAdapter(Question question) {
         this.question = question;
+    }
+
+    public Question getQuestion() {
+        return question;
     }
 
     @Override

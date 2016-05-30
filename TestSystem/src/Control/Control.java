@@ -52,7 +52,7 @@ public class Control {
 	}
 	
 	public void setItem(String item){
-		((ItemQuestion)question).setItem(item);
+		((ItemQuestion)question).addItem(item);
 	}
 	
 	public void setItem(int side, String item){
@@ -139,7 +139,7 @@ public class Control {
 		ChoiceQuestion choice = new ChoiceQuestion();
 		choice.setPrompt(prompt);
 		for(int i=0; i<items.length; i++){
-			choice.setItem(items[i]);
+			choice.addItem(items[i]);
 		}
 		choice.setScore(score);
 		choice.setAnswer(answer);
@@ -150,7 +150,7 @@ public class Control {
 		ChoiceQuestion choice = new ChoiceQuestion();
 		choice.setPrompt(prompt);
 		for(int i=0; i<items.length; i++){
-			choice.setItem(items[i]);
+			choice.addItem(items[i]);
 		}
 		page.addQuestion(choice);
 	}
@@ -179,7 +179,7 @@ public class Control {
 		RankQuestion question = new RankQuestion();
 		question.setPrompt(prompt);
 		for(int i=0; i<items.length; i++){
-			question.setItem(items[i]);
+			question.addItem(items[i]);
 		}
 		page.addQuestion(question);
 	}
@@ -188,7 +188,7 @@ public class Control {
 		RankQuestion question = new RankQuestion();
 		question.setPrompt(prompt);
 		for(int i=0; i<items.length; i++){
-			question.setItem(items[i]);
+			question.addItem(items[i]);
 		}
 		question.setScore(score);
 		question.setAnswer(answer);

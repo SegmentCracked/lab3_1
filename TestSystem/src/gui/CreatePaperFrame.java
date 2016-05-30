@@ -1,7 +1,8 @@
 package gui;
 
-import gui.listadapter.QuestionAdapter;
-import question.ChoiceQuestion;
+import gui.questionframe.ChoiceQuestionFrame;
+import gui.questionframe.DecideQuestionFrame;
+import gui.questionframe.QuestionFrame;
 import question.DecideQuestion;
 import question.Question;
 
@@ -26,7 +27,29 @@ public class CreatePaperFrame extends JFrame {
         JMenuItem essayQuestionBtn = new JMenuItem("Essay Question");
         JMenuItem mapQuestionBtn = new JMenuItem("Map Question");
         addQuestionMenu.add(decideQuestionBtn);
+        decideQuestionBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DecideQuestionFrame d = new DecideQuestionFrame(false);
+                d.setLocationRelativeTo(CreatePaperFrame.this);
+                d.setVisible(true);
+                if (d.getQuestion() != null){
+                    questionListModel.addElement(new QuestionAdapter(d.getQuestion()));
+                }
+            }
+        });
         addQuestionMenu.add(choiceQuestionBtn);
+        choiceQuestionBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChoiceQuestionFrame d= new ChoiceQuestionFrame(false);
+                d.setLocationRelativeTo(CreatePaperFrame.this);
+                d.setVisible(true);
+                if (d.getQuestion() !=null){
+                    questionListModel.addElement(new QuestionAdapter(d.getQuestion()));
+                }
+            }
+        });
         addQuestionMenu.add(rankQuestionBtn);
         addQuestionMenu.add(shortEssayQuestionBtn);
         addQuestionMenu.add(essayQuestionBtn);
@@ -72,6 +95,18 @@ public class CreatePaperFrame extends JFrame {
                 point.setLocation(point.getX(), point.getY() + addBtn.getHeight());
                 addQuestionMenu.setLocation(point);
                 addQuestionMenu.setVisible(true);
+            }
+        });
+        modifyBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (questionList.isSelectionEmpty()) return ;
+                int selectedIndex = questionList.getSelectedIndex();
+                Question question = questionListModel.get(selectedIndex).getQuestion();
+                QuestionFrame f = QuestionFrame.createFrameByQuestion(question, false);
+                f.setLocationRelativeTo(CreatePaperFrame.this);
+                f.setVisible(true);
+                questionList.setModel(questionListModel);
             }
         });
         return ret;
