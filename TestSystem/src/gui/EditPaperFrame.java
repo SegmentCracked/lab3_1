@@ -1,7 +1,7 @@
 package gui;
 
 import gui.questionframe.*;
-import question.DecideQuestion;
+import paper.Page;
 import question.Question;
 
 import javax.swing.*;
@@ -14,9 +14,10 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Created by Mengxiao Lin on 2016/5/30.
  */
-public class CreatePaperFrame extends JFrame {
+public class EditPaperFrame extends JFrame {
     private JList<QuestionAdapter> questionList;
     private DefaultListModel<QuestionAdapter> questionListModel;
+    private JTextField titleTextField;
     private ActionListener questionBtnListenerFactory(Class frameClass, boolean hasAnswer){
         return new ActionListener() {
             @Override
@@ -28,7 +29,7 @@ public class CreatePaperFrame extends JFrame {
                     e1.printStackTrace();
                     return;
                 }
-                d.setLocationRelativeTo(CreatePaperFrame.this);
+                d.setLocationRelativeTo(EditPaperFrame.this);
                 d.setVisible(true);
                 if (d.getQuestion() != null){
                     questionListModel.addElement(new QuestionAdapter(d.getQuestion()));
@@ -104,7 +105,7 @@ public class CreatePaperFrame extends JFrame {
                 int selectedIndex = questionList.getSelectedIndex();
                 Question question = questionListModel.get(selectedIndex).getQuestion();
                 QuestionFrame f = QuestionFrame.createFrameByQuestion(question, false);
-                f.setLocationRelativeTo(CreatePaperFrame.this);
+                f.setLocationRelativeTo(EditPaperFrame.this);
                 f.setVisible(true);
                 questionList.setModel(questionListModel);
             }
@@ -120,24 +121,42 @@ public class CreatePaperFrame extends JFrame {
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreatePaperFrame.this.dispatchEvent(new WindowEvent(CreatePaperFrame.this, WindowEvent.WINDOW_CLOSING));
+                EditPaperFrame.this.dispatchEvent(new WindowEvent(EditPaperFrame.this, WindowEvent.WINDOW_CLOSING));
             }
         });
         rightPanel.add(cancelBtn);
         rightPanel.add(finishBtn);
         return ret;
     }
-    public CreatePaperFrame(){
+    private JPanel createPageTitleBox(){
+        titleTextField = new JTextField();
+        JPanel ret = new JPanel(new BorderLayout());
+        ret.add(new JLabel("Title:"), BorderLayout.WEST);
+        ret.add(titleTextField,BorderLayout.CENTER);
+        return ret;
+    }
+    public void parsePage(Page page){
+        this.titleTextField.setText(page.getPageName());
+        for (int i=0;i<page.getQuestionSize();++i){
+            questionListModel.addElement(new QuestionAdapter(page.getQuestion(i)));
+        }
+    }
+
+    public EditPaperFrame(){
         setLayout(new BorderLayout());
         questionListModel = new DefaultListModel<>();
         questionList = new JList<>(questionListModel);
         add(questionList, BorderLayout.CENTER);
-        add(createTopBtn(), BorderLayout.NORTH);
+
+        JPanel topPanel =new JPanel(new GridLayout(2,1));
+        topPanel.add(createPageTitleBox());
+        topPanel.add(createTopBtn());
+        add(topPanel, BorderLayout.NORTH);
         add(createBottomBtn(),BorderLayout.SOUTH);
         pack();
         setMinimumSize(new Dimension(400,300));
         setLocationRelativeTo(null);
-        setTitle("Create Paper");
+        setTitle("Edit Paper");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 }
