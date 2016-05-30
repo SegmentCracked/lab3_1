@@ -62,6 +62,7 @@ public class MainMenuFrame extends JFrame {
         add(createBtnPanel(),BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }
