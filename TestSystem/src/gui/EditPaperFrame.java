@@ -1,6 +1,6 @@
 package gui;
 
-import gui.questionframe.*;
+import gui.questionedit.*;
 import Paper.Page;
 import Question.*;
 import javax.swing.*;
