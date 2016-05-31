@@ -9,8 +9,6 @@ public interface Controller {
 	
 	public void setPageName(String name);
 	
-	public void createQuestion(Question question);
-	
 	public List<String> getPageName(int type);
 	
 	public List<String> displayPage(int index, int type);
@@ -48,5 +46,17 @@ public interface Controller {
 	public void setScore(int score);
 	
 	public String getOutcome(int index, int type);
+	
+	public void createQuestion(int type, String prompt, int score, String answer);
+	
+	public void createQuestion(int type, String prompt);
+	
+	public void createQuestion(int type, String prompt, String[] items, int score, String answer);
+	
+	public void createQuestion(int type, String prompt, String[] items);
+	
+	public void createQuestion(int type, String prompt, String[] side1, String[] side2);
+	
+	public void createQuestion(int type, String prompt, String[] side1, String[] side2, int score, String answer);
 }
 
