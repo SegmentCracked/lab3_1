@@ -1,6 +1,6 @@
 package gui;
 
-import control.Control;
+import Control.Control;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

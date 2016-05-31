@@ -1,7 +1,7 @@
 package gui.questionframe;
 
-import question.Question;
-import question.RankQuestion;
+import Question.Question;
+import Question.RankQuestion;
 
 import javax.swing.*;
 import java.awt.*;

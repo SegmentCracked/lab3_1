@@ -1,6 +1,6 @@
 package gui;
 
-import question.Question;
+import Question.Question;
 
 /**
  * Created by Mengxiao Lin on 2016/5/30.

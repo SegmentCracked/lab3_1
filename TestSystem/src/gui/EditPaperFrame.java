@@ -1,9 +1,8 @@
 package gui;
 
 import gui.questionframe.*;
-import paper.Page;
-import question.Question;
-
+import Paper.Page;
+import Question.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

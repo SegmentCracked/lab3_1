@@ -1,7 +1,7 @@
 package gui.questionframe;
 
-import question.MapQuestion;
-import question.Question;
+import Question.MapQuestion;
+import Question.Question;
 
 import javax.swing.*;
 import java.awt.*;

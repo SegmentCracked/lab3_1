@@ -1,7 +1,7 @@
 package gui.questionframe;
 
-import question.ChoiceQuestion;
-import question.Question;
+import Question.ChoiceQuestion;
+import Question.Question;
 
 import javax.swing.*;
 import java.awt.*;

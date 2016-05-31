@@ -1,6 +1,6 @@
 package gui.questionframe;
 
-import question.*;
+import Question.*;
 
 import javax.swing.*;
 import java.awt.*;
