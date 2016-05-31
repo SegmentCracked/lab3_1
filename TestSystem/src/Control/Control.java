@@ -70,7 +70,7 @@ public class Control implements Controller {
 			Test test = (Test)page;
 			test.computeScore();
 		}
-		io.writeInfo(pageName<List>);
+		io.writeInfo(pageNameList);
 		io.writePage(page);
 	}
 	
@@ -201,9 +201,9 @@ public class Control implements Controller {
 		Iterator<Question> questionIterator = page.iterator();
 		List<String> outcome = new LinkedList<String>();
 		outcome = questionControl.getOutcome(page, recordList);
-		String ret = ;
+		String ret="" ;
 		for(int i=0; i<outcome.size(); i++){
-			ret += outcome.get(i)+n;
+			ret += outcome.get(i);
 		}
 		return ret;
 	}
