@@ -200,10 +200,10 @@ public class Control implements Controller {
 		}
 		Iterator<Question> questionIterator = page.iterator();
 		List<String> outcome = new LinkedList<String>();
-		outcome = questionControl.getOutcome(page, recordList);
+		outcome = questionControl.getOutcome(page, recordList,questionIterator);
 		String ret="" ;
 		for(int i=0; i<outcome.size(); i++){
-			ret += outcome.get(i);
+			ret += outcome.get(i)+"\n";
 		}
 		return ret;
 	}
