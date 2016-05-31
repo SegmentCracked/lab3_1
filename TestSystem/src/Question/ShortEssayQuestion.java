@@ -1,4 +1,4 @@
-package question;
+package Question;
 
 import answer.Answer;
 import answer.TextAnswer;

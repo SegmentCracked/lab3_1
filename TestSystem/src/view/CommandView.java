@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
-import control.Control;
+import Control.Control;
 
 public class CommandView {
 	Control control = new Control();
