@@ -1,4 +1,4 @@
-package gui.questionframe;
+package gui.questionedit;
 
 import Question.DecideQuestion;
 import Question.Question;

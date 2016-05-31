@@ -1,11 +1,9 @@
-package gui.questionframe;
+package gui.questionedit;
 
 import Question.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by Mengxiao Lin on 2016/5/30.
