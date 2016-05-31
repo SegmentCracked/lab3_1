@@ -1,23 +1,22 @@
-package control;
+package Control;
 
 import java.util.*;
 
 import answer.*;
-import paper.Page;
-import paper.Record;
-import paper.Survey;
-import paper.Test;
-import question.ChoiceQuestion;
-import question.DecideQuestion;
-import question.EssayQuestion;
-import question.ItemQuestion;
-import question.MapQuestion;
-import question.Question;
-import question.RankQuestion;
-import question.ShortEssayQuestion;
+import Paper.Page;
+import Paper.Record;
+import Paper.Survey;
+import Paper.Test;
+import Question.ChoiceQuestion;
+import Question.DecideQuestion;
+import Question.EssayQuestion;
+import Question.ItemQuestion;
+import Question.MapQuestion;
+import Question.Question;
+import Question.RankQuestion;
+import Question.ShortEssayQuestion;
 
-public class Control {
-	
+public class Control implements Controller {
 	
 	List<String>[] pageNameList;
 	Page page;
@@ -51,32 +50,8 @@ public class Control {
 		}
 	}
 	
-	public void setItem(String item){
-		((ItemQuestion)question).setItem(item);
-	}
-	
-	public void setItem(int side, String item){
-		MapQuestion map = (MapQuestion)question;
-		map.setSide(side);
-		map.setItem(item);
-	}
-	
-	public void setSide(int side){
-		MapQuestion map = (MapQuestion)question;
-		map.setSide(side);
-	}
-	
-	public void setAnswer(String answer){
-		question.setAnswer(answer);
-	}
-	
-	public void setPrompt(String prompt){
-		question.setPrompt(prompt);
-
-	}
-	
-	public void setScore(int score){
-		question.setScore(score);
+	public void createQuestion(Question question) {
+		QuestionController.createQuestion(page, question);
 	}
 	
 	public List<String> getPageName(int type){
@@ -89,16 +64,7 @@ public class Control {
 			return ret;
 		}else{
 			page = io.readPage(pageNameList[type].get(index));
-			Iterator<Question> questions = page.iterator();
-			while(questions.hasNext()){
-				Question q = questions.next();
-				int ty = q.getType();
-				String answer = "";
-				if(type == 1 && ty != 3){
-					answer = "\nThe correct answer is " + q.getAnswer().writeAnswer();
-				}
-				ret.add(q.getQuestion()+answer+"\n");
-			}
+			ret = QuestionController.getQuestions(page);
 			return ret;
 		}
 	}
@@ -117,133 +83,41 @@ public class Control {
 			return -1;
 		}else{
 			question = page.getQuestion(index);
-			return question.getType();
+			return QuestionController.getType(question);
 		}
 	}
 	
-	public void createDecideQuestion(String prompt, int score, String answer){
-		DecideQuestion decide = new DecideQuestion();
-		decide.setPrompt(prompt);
-		decide.setScore(score);
-		decide.setAnswer(answer);
-		page.addQuestion(decide);
+	public void setPrompt(String prompt) {
+		QuestionControl.setPrompt(question, prompt);
 	}
 	
-	public void createDecideQuestion(String prompt){
-		DecideQuestion decide = new DecideQuestion();
-		decide.setPrompt(prompt);
-		page.addQuestion(decide);
+	public void setAnswer(String answer) {
+		QuestionControl.setAnswer(question, answer);
+	}
+
+	public String changeItem(int index, String item){
+		if(QuestionController.changeItem(question, index, item))
+			return "Ok, it has changed";
+		else
+			return "We don't have this item";
 	}
 	
-	public void createChoiceQuestion(String prompt, String[] items, int score, String answer){
-		ChoiceQuestion choice = new ChoiceQuestion();
-		choice.setPrompt(prompt);
-		for(int i=0; i<items.length; i++){
-			choice.setItem(items[i]);
-		}
-		choice.setScore(score);
-		choice.setAnswer(answer);
-		page.addQuestion(choice);
+	public String changeItemNumber(int num){
+		if(QuestionController.changeItemNumber(question, num))
+			return "Ok, it has changed";
+		else
+			return "We don't have this item";
 	}
 	
-	public void createChoiceQuestion(String prompt, String[] items){
-		ChoiceQuestion choice = new ChoiceQuestion();
-		choice.setPrompt(prompt);
-		for(int i=0; i<items.length; i++){
-			choice.setItem(items[i]);
-		}
-		page.addQuestion(choice);
+	public String remove(int index){
+		if(QuestionController.remove(question, index))
+			return "Ok, it has changed";
+		else
+			return "We don't have this item";
 	}
 	
-	public void createTextQuestion(String prompt){
-		ShortEssayQuestion text = new ShortEssayQuestion();
-		text.setPrompt(prompt);
-		page.addQuestion(text);
-	}
-	
-	public void createTextQuestion(String prompt, int score, String answer){
-		ShortEssayQuestion text = new ShortEssayQuestion();
-		text.setPrompt(prompt);
-		text.setScore(score);
-		text.setAnswer(answer);
-		page.addQuestion(text);
-	}
-	
-	public void createEssayQuestion(String prompt){
-		EssayQuestion question = new EssayQuestion();
-		question.setPrompt(prompt);
-		page.addQuestion(question);
-	}
-	
-	public void createRankQuestion(String prompt, String[] items){
-		RankQuestion question = new RankQuestion();
-		question.setPrompt(prompt);
-		for(int i=0; i<items.length; i++){
-			question.setItem(items[i]);
-		}
-		page.addQuestion(question);
-	}
-	
-	public void createRankQuestion(String prompt, String[] items, int score, String answer){
-		RankQuestion question = new RankQuestion();
-		question.setPrompt(prompt);
-		for(int i=0; i<items.length; i++){
-			question.setItem(items[i]);
-		}
-		question.setScore(score);
-		question.setAnswer(answer);
-		page.addQuestion(question);
-	}
-	
-	public void createMapQuestion(String prompt, String[] side1, String[] side2){
-		MapQuestion map = new MapQuestion();
-		map.setPrompt(prompt);
-		map.setSide(1);
-		for(int i=0; i<side1.length; i++){
-			map.setItem(side1[i]);
-		}
-		map.setSide(2);
-		for(int i=0; i<side2.length; i++){
-			map.setItem(side2[i]);
-		}
-		page.addQuestion(map);
-	}
-	
-	public void createMapQuestion(String prompt, String[] side1, String[] side2, int score, String answer){
-		MapQuestion map = new MapQuestion();
-		map.setPrompt(prompt);
-		map.setSide(1);
-		for(int i=0; i<side1.length; i++){
-			map.setItem(side1[i]);
-		}
-		map.setSide(2);
-		for(int i=0; i<side2.length; i++){
-			map.setItem(side2[i]);
-		}
-		map.setScore(score);
-		map.setAnswer(answer);
-		page.addQuestion(map);
-	}		
-	
-	public boolean remove(int index){
-		if(question.getType() == AnswerFactory.AnswerType.MAP){
-			return ((MapQuestion)question).remove(index);
-		}
-		return ((ItemQuestion)question).remove(index);
-	}
-	
-	public boolean changeItem(int index, String item){
-		if(question.getType() == AnswerFactory.AnswerType.MAP){
-			return ((MapQuestion)question).changeItem(index, item);		
-		}
-		return ((ItemQuestion)question).changeItem(index, item);
-	}
-	
-	public boolean changeItemNumber(int num){
-		if(question.getType() == AnswerFactory.AnswerType.MAP){
-			return ((MapQuestion)question).changeItemNumber(num);		
-		}
-		return ((ItemQuestion)question).changeItemNumber(num);
+	public void setSide(int side) {
+		QuestionController.setSide(question, side);
 	}
 	
 	public void loadPage(int index, int type){
@@ -253,22 +127,20 @@ public class Control {
 	
 	public void setRecordName(String name){
 		record.setPersonName(name);
-		iterator = page.iterator();
+		QuestionController.initIterator(page);
 	}
 	
 	public String nextQuestion(){
-		question = iterator.next();
-		return question.getQuestion();
+		question = QuestionController.nextQuestion(page);
+		return QuestionController.getQuestion(question);
 	}
 	
 	public boolean hasNextQuestion(){
-		return iterator.hasNext();
+		return QuestionController.hasNextQuestion(page);
 	}
 	
 	public void answerQuestion(String answer){
-		AnswerFactory factory = new AnswerFactory();
-		Answer answerObject = factory.createAnswer(question.getType());
-		answerObject.setAnswer(answer);
+		Answer answerObject = QuestionController.answerQuestion(question,answer);
 		record.addAnswer(answerObject);
 	}
 	
@@ -283,18 +155,12 @@ public class Control {
 	}
 	
 	public void grade(){
-		Iterator<Question> questionIterator = page.iterator();
-		Iterator<Answer> answerIterator = record.iterator();
-		if(questionIterator.hasNext()){
-			Question q = questionIterator.next();
-			if(q.getType() != 3){
-				if(q.match(answerIterator.next())){
-					record.addScore(q.getScore());
-				}
-			}else{
-				answerIterator.next();
-			}
-		}
+		int score = QuestionController.grade(page, record);
+		record.addScore(score);
+	}
+	
+	public void setScore(int score){
+		question.setScore(score);
 	}
 	
 	public String getOutcome(int index, int type){
@@ -306,24 +172,7 @@ public class Control {
 		}
 		Iterator<Question> questionIterator = page.iterator();
 		List<String> outcome = new LinkedList<String>();
-		while(questionIterator.hasNext()){
-			Question question = questionIterator.next();
-			Map<String, Integer> map = new HashMap<String, Integer>();
-			for(int i=0; i<recordList.size(); i++){
-				Answer answer = recordList.get(i).next();
-				if(map.containsKey(answer.writeAnswer())){
-					int value = map.get(answer.writeAnswer());
-					map.put(answer.writeAnswer(), value+1);
-				}else{
-					map.put(answer.writeAnswer(), 1);
-				}
-			}
-			String oneOutcome = question.getQuestion();
-			for(String key: map.keySet()){
-				oneOutcome +="Answer: " + key+"\t"+map.get(key)+"\n";
-			}
-			outcome.add(oneOutcome);
-		}
+		outcome = QuestionController.getOutcome(page, recordList);
 		String ret = "";
 		for(int i=0; i<outcome.size(); i++){
 			ret += outcome.get(i)+"\n";

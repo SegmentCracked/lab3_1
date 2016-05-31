@@ -1,6 +1,6 @@
-package paper;
+package Paper;
 
-import question.Question;
+import Question.Question;
 
 public class Test extends Page {
 	int totalScore;
