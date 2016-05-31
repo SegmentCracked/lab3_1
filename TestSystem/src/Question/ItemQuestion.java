@@ -9,7 +9,8 @@ public abstract class ItemQuestion extends Question{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public abstract void setItem(String item);
+	public abstract void addItem(String item);
+	public abstract void clearItem();
 	public abstract List<String> getItem();
 	public abstract boolean remove(int index);
 	public abstract boolean changeItem(int index, String item);

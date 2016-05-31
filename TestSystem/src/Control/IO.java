@@ -172,7 +172,7 @@ public class IO {
 		List<Element> items = question.getChild("items").getChildren();
 		for(int i=0; i<items.size(); i++){
 			Element item = items.get(i);
-			choice.setItem(item.getText());
+			choice.addItem(item.getText());
 		}
 		if(question.getAttributeValue("answer").equals("1")){
 			choice.setAnswer(question.getChildText("answer"));
@@ -202,7 +202,7 @@ public class IO {
 		rank.setScore(Integer.parseInt(question.getChildText("score")));
 		List<Element> items = question.getChild("items").getChildren();
 		for(int i=0; i<items.size(); i++){
-			rank.setItem(items.get(i).getText());
+			rank.addItem(items.get(i).getText());
 		}
 		System.out.println(question.getChildText("answer"));
 		if(question.getAttributeValue("answer").equals("1")){

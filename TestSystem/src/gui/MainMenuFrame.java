@@ -34,10 +34,25 @@ public class MainMenuFrame extends JFrame {
         createPaperBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreatePaperFrame createPaperFrame = new CreatePaperFrame();
-                createPaperFrame.setVisible(true);
+                EditPaperFrame editPaperFrame = new EditPaperFrame();
+                editPaperFrame.setVisible(true);
                 MainMenuFrame.this.hideFrame();
-                createPaperFrame.addWindowListener(new WindowAdapter() {
+                editPaperFrame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        MainMenuFrame.this.reshowFrame();
+                    }
+                });
+            }
+        });
+
+        loadPaperBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoadPaperFrame loadPaperFrame= new LoadPaperFrame();
+                loadPaperFrame.setVisible(true);
+                MainMenuFrame.this.hideFrame();
+                loadPaperFrame.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
                         MainMenuFrame.this.reshowFrame();
