@@ -1,13 +1,8 @@
-package question;
+package Question;
 
 import answer.Answer;
 
-public abstract class PromptQuestion extends Question{
-	
-	public PromptQuestion(int type) {
-		super(type);
-	}
-
+public abstract class PromptQuestion implements Question {
 	@Override
 	public abstract Answer getAnswer();
 	@Override

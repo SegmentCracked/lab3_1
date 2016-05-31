@@ -1,14 +1,8 @@
-package question;
+package Question;
 
 import java.util.List;
 
-public abstract class ItemQuestion extends Question{
-
-	public ItemQuestion(int type) {
-		super(type);
-		// TODO Auto-generated constructor stub
-	}
-	
+public abstract class ItemQuestion implements Question {
 	public abstract void addItem(String item);
 	public abstract void clearItem();
 	public abstract List<String> getItem();

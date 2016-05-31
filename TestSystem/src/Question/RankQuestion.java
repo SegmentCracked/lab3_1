@@ -1,4 +1,4 @@
-package question;
+package Question;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,16 +10,39 @@ public class RankQuestion extends ItemQuestion {
 	
 	RankAnswer answer;
 	List<String> items = new LinkedList<String>();
+	int score;
+	String prompt;
 
 	@Override
 	public void clearItem() {
 		items.clear();
 	}
 
-	public RankQuestion(){
-		super(4);
+	@Override
+	public int getType() {
+		return QuestionFactory.QuestionType.RANK;
 	}
-	
+
+	@Override
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	@Override
+	public int getScore() {
+		return this.score;
+	}
+
+	@Override
+	public String getPrompt() {
+		return prompt;
+	}
+
+	@Override
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
+
 	@Override
 	public void addItem(String item) {
 		items.add(item);		

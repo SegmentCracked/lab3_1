@@ -1,4 +1,4 @@
-package question;
+package Question;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,16 +9,15 @@ import answer.ChoiceAnswer;
 public class ChoiceQuestion extends ItemQuestion {
 	List<String> items = new LinkedList<String>();
 	ChoiceAnswer answer;
+	int score;
+	String prompt;
 
 	@Override
 	public void clearItem() {
 		items.clear();
 	}
 
-	public ChoiceQuestion(){
-		super(1);
-	}
-	
+
 	@Override
 	public void addItem(String item) {
 		this.items.add(item);
@@ -50,6 +49,30 @@ public class ChoiceQuestion extends ItemQuestion {
 		return ret;
 	}
 
+	@Override
+	public int getType() {
+		return QuestionFactory.QuestionType.CHOICE;
+	}
+
+	@Override
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	@Override
+	public int getScore() {
+		return this.score;
+	}
+
+	@Override
+	public String getPrompt() {
+		return prompt;
+	}
+
+	@Override
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
 	@Override
 	public List<String> getItem() {
 		return items;

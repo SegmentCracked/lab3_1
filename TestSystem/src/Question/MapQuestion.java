@@ -1,4 +1,4 @@
-package question;
+package Question;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,17 +6,16 @@ import java.util.List;
 import answer.Answer;
 import answer.MapAnswer;
 
-public class MapQuestion extends Question {
+public class MapQuestion implements Question {
 	
 	MapAnswer answer;
 	List<String> side1 = new LinkedList<String>();
 	List<String> side2 = new LinkedList<String>();
 	int side;
+	int score;
+	String prompt;
 	
-	public MapQuestion(){
-		super(5);
-	}
-	
+
 	public void setItem(String item) {
 		// TODO Auto-generated method stub
 		if(side == 1){
@@ -96,6 +95,31 @@ public class MapQuestion extends Question {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int getType() {
+		return QuestionFactory.QuestionType.MAP;
+	}
+
+	@Override
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	@Override
+	public int getScore() {
+		return this.score;
+	}
+
+	@Override
+	public String getPrompt() {
+		return prompt;
+	}
+
+	@Override
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
 	}
 
 	public boolean changeItemNumber(int num) {
