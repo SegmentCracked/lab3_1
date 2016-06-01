@@ -2,6 +2,7 @@ package gui.questionedit;
 
 import Question.MapQuestion;
 import Question.Question;
+import Question.QuestionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,7 +48,8 @@ public class MapQuestionFrame extends QuestionFrame{
         setTitle("Map Question");
         setMinimumSize(new Dimension(350,500));
         pack();
-        setQuestion(new MapQuestion());
+        QuestionFactory factory = new QuestionFactory();
+        setQuestion(factory.createQuestion(QuestionFactory.QuestionType.MAP));
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

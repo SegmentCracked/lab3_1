@@ -2,6 +2,7 @@ package gui.questionedit;
 
 import Question.DecideQuestion;
 import Question.Question;
+import Question.QuestionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +33,6 @@ public class DecideQuestionFrame extends QuestionFrame {
     }
     public DecideQuestionFrame(boolean hasAnswer) {
         super(hasAnswer);
-        question = new DecideQuestion();
         setLayout(new BorderLayout());
         add(createBottomPanel(),BorderLayout.SOUTH);
         cancelBtn.addActionListener(new ActionListener() {
@@ -59,6 +59,8 @@ public class DecideQuestionFrame extends QuestionFrame {
         });
         pack();
         setTitle("Decide Question");
+        QuestionFactory factory = new QuestionFactory();
+        setQuestion(factory.createQuestion(QuestionFactory.QuestionType.DECIDE));
     }
 
     @Override

@@ -2,7 +2,7 @@ package gui.questionedit;
 
 import Question.Question;
 import Question.RankQuestion;
-
+import Question.QuestionFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,6 @@ public class RankQuestionFrame extends QuestionFrame {
     public RankQuestionFrame(boolean hasAnswer) {
         super(hasAnswer);
         promptTextField = new JTextField();
-        setQuestion(new RankQuestion());
         setLayout(new BorderLayout());
         add(createBottomPanel(), BorderLayout.SOUTH);
         add(createMainPanel(),BorderLayout.CENTER);
@@ -63,6 +62,8 @@ public class RankQuestionFrame extends QuestionFrame {
         setMinimumSize(new Dimension(300,200));
         setTitle("Rank Question");
         pack();
+        QuestionFactory factory = new QuestionFactory();
+        setQuestion(factory.createQuestion(QuestionFactory.QuestionType.RANK));
     }
 
     @Override

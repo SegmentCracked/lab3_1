@@ -1,6 +1,7 @@
 package gui.questionshower;
 
 import Question.Question;
+import answer.Answer;
 
 import javax.swing.*;
 
@@ -12,4 +13,5 @@ public abstract class QuestionShower extends JPanel{
     }
     public abstract void clearInput();
     public abstract boolean isFilled();
+    public abstract Answer getAnswer();
 }

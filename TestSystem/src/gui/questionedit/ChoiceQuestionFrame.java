@@ -2,6 +2,7 @@ package gui.questionedit;
 
 import Question.ChoiceQuestion;
 import Question.Question;
+import Question.QuestionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +32,6 @@ public class ChoiceQuestionFrame extends QuestionFrame {
     }
     public ChoiceQuestionFrame(boolean hasAnswer) {
         super(hasAnswer);
-        question = new ChoiceQuestion();
         setLayout(new BorderLayout());
         add(createBottomPanel(), BorderLayout.SOUTH);
         add(createMainPanel(),BorderLayout.CENTER);
@@ -62,6 +62,8 @@ public class ChoiceQuestionFrame extends QuestionFrame {
         setMinimumSize(new Dimension(300,200));
         setTitle("Choice Question");
         pack();
+        QuestionFactory factory = new QuestionFactory();
+        setQuestion(factory.createQuestion(QuestionFactory.QuestionType.CHOICE));
     }
 
     @Override

@@ -111,7 +111,7 @@ public class Control implements Controller {
 	
 	public List<String> displayPage(int index, int type){
 		List<String> ret = new LinkedList<String>();
-		if(pageNameList[type].size() == index){
+		if(pageNameList[type].size() >= index){
 			return ret;
 		}else{
 			page = io.readPage(pageNameList[type].get(index));
