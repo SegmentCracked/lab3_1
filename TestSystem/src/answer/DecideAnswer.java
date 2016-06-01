@@ -2,12 +2,13 @@ package answer;
 
 public class DecideAnswer implements Answer{
 	
-	int anwser;
-	
+	int answer;
+	public static final String RIGHT = "1";
+	public static final String FALSE = "2";
 	@Override
 	public String getAnswer() {
 		// TODO Auto-generated method stub
-		String ret = ""+anwser;
+		String ret = ""+ answer;
 		return ret;
 	}
 
@@ -15,14 +16,14 @@ public class DecideAnswer implements Answer{
 	@Override
 	public void setAnswer(String answer) {
 		// TODO Auto-generated method stub
-		this.anwser = Integer.parseInt(answer);
+		this.answer = Integer.parseInt(answer);
 	}
 
 
 	@Override
 	public String writeAnswer() {
 		// TODO Auto-generated method stub
-		return anwser+"";
+		return answer +"";
 	}
 
 

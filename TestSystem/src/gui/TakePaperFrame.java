@@ -61,6 +61,9 @@ public class TakePaperFrame extends JFrame {
                 }
                 Control control = Control.getInstance();
                 QuestionShowerFactory questionShowerFactory = new QuestionShowerFactory();
+                if (! (currentQuestionShower instanceof CoverShower)){
+                    control.setAnswer(currentQuestionShower.getAnswer().getAnswer());
+                }
                 if (control.hasNextQuestion()){
                     Question question = control.nextQuestion();
                     TakePaperFrame.this.remove(currentQuestionShower);

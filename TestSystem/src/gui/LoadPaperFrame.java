@@ -8,6 +8,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,8 @@ public class LoadPaperFrame extends JFrame {
     private void loadPaperList(){
         Control control = Control.getInstance();
         List<String> pageList = control.getPageName(0);
+        paperListModel.clear();
+        realPageList.clear();
         for (int i=0;i<pageList.size();++i){
             String s = pageList.get(i);
             paperListModel.addElement(s);
@@ -70,6 +74,24 @@ public class LoadPaperFrame extends JFrame {
         btnPanel.add(editPaperBtn);
         takePaperBtn = new JButton("Take it");
         btnPanel.add(takePaperBtn);
+        editPaperBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (paperList.isSelectionEmpty()) return ;
+                PageAdapter pageAdapter = realPageList.get(paperList.getSelectedIndex());
+                Control control = Control.getInstance();
+                control.loadPage(pageAdapter.index, pageAdapter.type);
+                EditPaperFrame f = new EditPaperFrame();
+                f.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        loadPaperList();
+                    }
+                });
+                f.parsePage();
+                f.setVisible(true);
+            }
+        });
         takePaperBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,6 +123,7 @@ public class LoadPaperFrame extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int selectedIndex = paperList.getSelectedIndex();
+                if (selectedIndex == -1) return ;
                 tipsLabel.setText(realPageList.get(selectedIndex).toString());
             }
         });

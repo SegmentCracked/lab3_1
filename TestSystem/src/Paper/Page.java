@@ -47,7 +47,9 @@ public abstract class Page {
 	public Iterator<Question> iterator(){
 		return new IteratorQuestion();
 	}
-	
+	public void clearPage(){
+		questionList.clear();
+	}
 	class IteratorQuestion implements Iterator<Question> {
 		int questionIndex;
 

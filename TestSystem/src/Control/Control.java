@@ -83,7 +83,9 @@ public class Control implements Controller {
 		questionControl.initIterator(page);
 		record = new Record();
 	}
-	
+	public void addQuestionToPage(Question question){
+		page.addQuestion(question);
+	}
 	public void createQuestion(int type, String prompt, int score, String answer) {
 		Question question = questionControl.createQuestion(type, prompt, score, answer);
 		page.addQuestion(question);

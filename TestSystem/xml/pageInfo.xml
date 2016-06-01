@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <totalInfo>
   <pageName type="survey">Test</pageName>
+  <pageName type="survey">Test2</pageName>
+  <pageName type="survey">Test3</pageName>
 </totalInfo>
 

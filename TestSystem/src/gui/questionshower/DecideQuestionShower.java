@@ -58,10 +58,10 @@ public class DecideQuestionShower extends QuestionShower {
         AnswerFactory factory = new AnswerFactory();
         DecideAnswer answer = (DecideAnswer) factory.createAnswer(AnswerFactory.AnswerType.DECIDE);
         if (trueBtn.isSelected()){
-            answer.setAnswer("True");
+            answer.setAnswer(DecideAnswer.RIGHT);
         }
         if (falseBtn.isSelected()){
-            answer.setAnswer("False");
+            answer.setAnswer(DecideAnswer.FALSE);
         }
         return answer;
     }

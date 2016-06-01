@@ -15,9 +15,9 @@ public class DecideQuestion extends PromptQuestion {
 	}
 	
 	@Override
-	public void setAnswer(String anwser){
-		answer = new DecideAnswer();
-		answer.setAnswer(anwser);
+	public void setAnswer(String answer){
+		this.answer = new DecideAnswer();
+		this.answer.setAnswer(answer);
 	}
 	
 	@Override

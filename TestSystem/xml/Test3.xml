@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paper.Page type="survey">
+  <pageName>Test3</pageName>
+  <questions>
+    <question type="0" isScore="1" answer="0">
+      <prompt>Do you like me?</prompt>
+      <score>0</score>
+    </question>
+    <question type="1" isScore="1" answer="0">
+      <prompt>What's your favorite dinning hall?</prompt>
+      <items>
+        <item>North</item>
+        <item>Center</item>
+        <item>South</item>
+      </items>
+      <score>0</score>
+    </question>
+  </questions>
+</paper.Page>
+

@@ -1,5 +1,6 @@
 package gui;
 
+import Control.Control;
 import gui.questionedit.*;
 import Paper.Page;
 import Question.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -17,6 +19,8 @@ public class EditPaperFrame extends JFrame {
     private JList<QuestionAdapter> questionList;
     private DefaultListModel<QuestionAdapter> questionListModel;
     private JTextField titleTextField;
+    private int type; //TODO: make change type possible
+    private boolean isNewPage;
     private ActionListener questionBtnListenerFactory(Class frameClass, boolean hasAnswer){
         return new ActionListener() {
             @Override
@@ -109,7 +113,18 @@ public class EditPaperFrame extends JFrame {
                 questionList.setModel(questionListModel);
             }
         });
+        removeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (questionList.isSelectionEmpty()) return ;
+                int selectedIndex = questionList.getSelectedIndex();
+                questionListModel.remove(selectedIndex);
+            }
+        });
         return ret;
+    }
+    private void closeFrame(){
+        this.dispatchEvent(new WindowEvent(EditPaperFrame.this, WindowEvent.WINDOW_CLOSING));
     }
     private JComponent createBottomBtn(){
         JPanel ret= new JPanel(new BorderLayout());
@@ -120,7 +135,29 @@ public class EditPaperFrame extends JFrame {
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditPaperFrame.this.dispatchEvent(new WindowEvent(EditPaperFrame.this, WindowEvent.WINDOW_CLOSING));
+                closeFrame();
+            }
+        });
+        finishBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Control control =Control.getInstance();
+
+                if (isNewPage) {
+                    control.createPage(type);
+                    control.setPageName(titleTextField.getText());
+                }
+                else control.getPage().clearPage();
+                for (int i=0;i<questionListModel.size();++i){
+                    Question question = questionListModel.get(i).getQuestion();
+                    control.addQuestionToPage(question);
+                }
+                control.save();
+                JOptionPane.showConfirmDialog(EditPaperFrame.this,
+                        "Paper saved!",
+                        "Edit Paper",
+                        JOptionPane.DEFAULT_OPTION);
+                closeFrame();
             }
         });
         rightPanel.add(cancelBtn);
@@ -134,11 +171,22 @@ public class EditPaperFrame extends JFrame {
         ret.add(titleTextField,BorderLayout.CENTER);
         return ret;
     }
-    public void parsePage(Page page){
+
+    /**
+     * parse page from control
+     */
+    public void parsePage(){
+        Control control = Control.getInstance();
+        Page page = control.getPage();
+        if (page==null){
+            throw new NullPointerException();
+        }
         this.titleTextField.setText(page.getPageName());
+        this.titleTextField.setEditable(false);
         for (int i=0;i<page.getQuestionSize();++i){
             questionListModel.addElement(new QuestionAdapter(page.getQuestion(i)));
         }
+        isNewPage = false;
     }
 
     public EditPaperFrame(){
@@ -156,6 +204,7 @@ public class EditPaperFrame extends JFrame {
         setMinimumSize(new Dimension(400,300));
         setLocationRelativeTo(null);
         setTitle("Edit Paper");
+        isNewPage = true;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 }
