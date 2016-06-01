@@ -17,7 +17,7 @@ import Question.RankQuestion;
 import Question.ShortEssayQuestion;
 
 public class Control implements Controller {
-	
+	private static Control instance;
 	List<String>[] pageNameList;
 	Page page;
 	Question question;
@@ -28,8 +28,12 @@ public class Control implements Controller {
 	Iterator<Question> iterator;
 	QuestionControl questionControl = new QuestionControl();
 	
-	public Control(){
+	private Control(){
 		pageNameList = io.readInfo();
+	}
+	public static Control getInstance(){
+		if (instance == null) instance=new Control();
+		return instance;
 	}
 	
 	public void createPage(int type){
@@ -76,6 +80,7 @@ public class Control implements Controller {
 	
 	public void loadPage(int index, int type){
 		page = io.readPage(pageNameList[type].get(index));
+		questionControl.initIterator(page);
 		record = new Record();
 	}
 	
@@ -137,26 +142,26 @@ public class Control implements Controller {
 		questionControl.setAnswer(question, answer);
 	}
 
-	public String changeItem(int index, String item){
+	public boolean changeItem(int index, String item){
 		if(questionControl.changeItem(question, index, item))
-			return "Ok, it has changed";
+			return true;
 		else
-			return "We don't have this item";
+			return false;
 	}
 	
 
-	public String changeItemNumber(int num){
+	public boolean changeItemNumber(int num){
 		if(questionControl.changeItemNumber(question, num))
-			return "Ok, it has changed";
+			return true;
 		else
-			return "We don't have this item";
+			return false;
 	}
 	
-	public String remove(int index){
+	public boolean remove(int index){
 		if(questionControl.remove(question, index))
-			return "Ok, it has changed";
+			return true;
 		else
-			return "We don't have this item";
+			return false;
 	}
 	
 	public void setSide(int side) {
@@ -168,9 +173,8 @@ public class Control implements Controller {
 		questionControl.initIterator(page);
 	}
 	
-	public String nextQuestion(){
-		question = questionControl.nextQuestion(page);
-		return questionControl.getQuestion(question);
+	public Question nextQuestion(){
+		return questionControl.nextQuestion(page);
 	}
 	
 	public boolean hasNextQuestion(){
@@ -206,5 +210,9 @@ public class Control implements Controller {
 			ret += outcome.get(i)+"\n";
 		}
 		return ret;
+	}
+
+	public Page getPage() {
+		return page;
 	}
 }

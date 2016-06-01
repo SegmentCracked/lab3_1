@@ -7,6 +7,8 @@ import answer.DecideAnswer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Mengxiao Lin on 2016/6/1.
@@ -21,6 +23,18 @@ public class DecideQuestionShower extends QuestionShower {
         JPanel btnPanel =new JPanel(new GridLayout(2,1));
         trueBtn = new JToggleButton("Yes");
         falseBtn = new JToggleButton("No");
+        trueBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                falseBtn.setSelected(false);
+            }
+        });
+        falseBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                trueBtn.setSelected(false);
+            }
+        });
         btnPanel.add(trueBtn);
         btnPanel.add(falseBtn);
         add(promptLabel, BorderLayout.NORTH);
@@ -40,8 +54,15 @@ public class DecideQuestionShower extends QuestionShower {
 
     @Override
     public Answer getAnswer() {
+        if (!isFilled()) return null;
         AnswerFactory factory = new AnswerFactory();
         DecideAnswer answer = (DecideAnswer) factory.createAnswer(AnswerFactory.AnswerType.DECIDE);
+        if (trueBtn.isSelected()){
+            answer.setAnswer("True");
+        }
+        if (falseBtn.isSelected()){
+            answer.setAnswer("False");
+        }
         return answer;
     }
 }

@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import Control.Control;
+import Control.QuestionControl;
+import Question.QuestionFactory;
 
 public class CommandView {
-	Control control = new Control();
+	Control control = Control.getInstance();
 	Scanner sc = new Scanner(System.in);
 	int type;
 	
@@ -141,7 +143,7 @@ public class CommandView {
 				}
 		case 3: System.out.println("Please input new choice:");
 				String item = scan.nextLine();
-				control.setItem(item);
+				//control.add(item);
 				break;
 		case 4: System.out.println("Please input the index of the choice");
 				int index = sc.nextInt();
@@ -333,7 +335,7 @@ public class CommandView {
 			switch(temp){
 			case 1: this.addDecideQuestion();break;
 			case 2: this.addChoiceQuestion();break;
-			case 3: this.addTextQuestion(); break;
+			//case 3: this.addTextQuestion(); break;
 			case 4: this.addEssayQuestion();break;
 			case 5: this.addRankQuestion();break;
 			case 6: this.addMapQuestion();break;
@@ -351,10 +353,10 @@ public class CommandView {
 			String answer = scan.nextLine();
 			System.out.println("Please enter your score\n");
 			int score = sc.nextInt();
-			control.createDecideQuestion(prompt, score, answer);
+			control.createQuestion(QuestionFactory.QuestionType.DECIDE, prompt, score, answer);
 			return;
 		}
-		control.createDecideQuestion(prompt);
+		control.createQuestion(QuestionFactory.QuestionType.DECIDE, prompt);
 	}
 	
 	public void addChoiceQuestion(){
@@ -373,13 +375,14 @@ public class CommandView {
 			String answer = scan.nextLine();
 			System.out.println("Please enter your score\n");
 			int score = sc.nextInt();
-			control.createChoiceQuestion(prompt, items, score, answer);
+			control.createQuestion(QuestionFactory.QuestionType.CHOICE, prompt, items, score, answer);
 			return;
 		}
-		control.createChoiceQuestion(prompt, items);
+		control.createQuestion(QuestionFactory.QuestionType.CHOICE, prompt, items);
 	}
-	
+	/*
 	public void addTextQuestion(){
+		QuestionControl control =new QuestionControl();
 		System.out.println("Enter the prompt for you text question:");
 		Scanner scan = new Scanner(System.in);
 		String prompt = scan.nextLine();
@@ -388,17 +391,17 @@ public class CommandView {
 			String answer = scan.nextLine();
 			System.out.println("Please enter your score\n");
 			int score = sc.nextInt();
-			control.createTextQuestion(prompt, score, answer);
+			control.createQuestion(QuestionFactory.QuestionType.ESSAY,prompt, score, answer);
 			return;
 		}
 		control.createTextQuestion(prompt);
-	}
+	}*/
 	
 	public void addEssayQuestion(){
 		System.out.println("Enter the prompt for you essay question:");
 		Scanner scan = new Scanner(System.in);
 		String prompt = scan.nextLine();
-		control.createEssayQuestion(prompt);
+		control.createQuestion(QuestionFactory.QuestionType.ESSAY, prompt);
 	}
 	
 	public void addMapQuestion(){
@@ -424,10 +427,10 @@ public class CommandView {
 			String answer = scan.nextLine();
 			System.out.println("Please enter your score\n");
 			int score = sc.nextInt();
-			control.createMapQuestion(prompt, side1, side2, score, answer);
+			control.createQuestion(QuestionFactory.QuestionType.MAP, prompt, side1, side2, score, answer);
 			return;
 		}
-		control.createMapQuestion(prompt, side1, side2);
+		control.createQuestion(QuestionFactory.QuestionType.MAP, prompt, side1, side2);
 	}
 	
 	public void addRankQuestion(){
@@ -446,10 +449,10 @@ public class CommandView {
 			String answer = scan.nextLine();
 			System.out.println("Please enter your score\n");
 			int score = sc.nextInt();
-			control.createRankQuestion(prompt, items, score, answer);
+			control.createQuestion(QuestionFactory.QuestionType.RANK, prompt, items, score, answer);
 			return;
 		}
-		control.createRankQuestion(prompt, items);
+		control.createQuestion(QuestionFactory.QuestionType.RANK, prompt, items);
 	}
 	
 

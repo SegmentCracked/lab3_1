@@ -1,7 +1,16 @@
 package gui;
 
+import Control.Control;
+import Paper.Page;
+import Question.Question;
+import gui.questionshower.CoverShower;
+import gui.questionshower.QuestionShower;
+import gui.questionshower.QuestionShowerFactory;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Mengxiao Lin on 2016/5/31.
@@ -12,15 +21,18 @@ public class TakePaperFrame extends JFrame {
     private JButton navPreviousBtn;
     private JButton navNextBtn;
     private JLabel titleCountTips;
+    private QuestionShower currentQuestionShower;
 
     private JPanel createTopPanel(){
         JPanel ret = new JPanel(new BorderLayout());
         navPreviousBtn = new JButton("<-");
         navNextBtn = new JButton("->");
         titleCountTips = new JLabel("xx/xx");
-        add(navPreviousBtn,BorderLayout.WEST);
-        add(navNextBtn, BorderLayout.EAST);
-        add(titleCountTips, BorderLayout.CENTER);
+        titleCountTips.setVerticalAlignment(JLabel.CENTER);
+        titleCountTips.setHorizontalAlignment(JLabel.CENTER);
+        ret.add(navPreviousBtn,BorderLayout.WEST);
+        ret.add(navNextBtn, BorderLayout.EAST);
+        ret.add(titleCountTips, BorderLayout.CENTER);
         return ret;
     }
 
@@ -30,6 +42,34 @@ public class TakePaperFrame extends JFrame {
         nextQuestionBtn = new JButton("Next Question");
         giveUpBtn = new JButton("Give Up");
         btnPanel.add(giveUpBtn);
+        giveUpBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TakePaperFrame.this.setVisible(false);
+            }
+        });
+        nextQuestionBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!currentQuestionShower.isFilled()){
+                    JOptionPane.showConfirmDialog(TakePaperFrame.this,
+                            "Please fill this question",
+                            "Take Paper",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.ERROR_MESSAGE);
+                    return ;
+                }
+                Control control = Control.getInstance();
+                QuestionShowerFactory questionShowerFactory = new QuestionShowerFactory();
+                if (control.hasNextQuestion()){
+                    Question question = control.nextQuestion();
+                    TakePaperFrame.this.remove(currentQuestionShower);
+                    currentQuestionShower = questionShowerFactory.createQuestionShowerByQuestion(question);
+                    add(currentQuestionShower, BorderLayout.CENTER);
+                }
+                TakePaperFrame.this.revalidate();
+            }
+        });
         btnPanel.add(nextQuestionBtn);
         ret.add(btnPanel,BorderLayout.EAST);
         return ret;
@@ -38,9 +78,15 @@ public class TakePaperFrame extends JFrame {
         setLayout(new BorderLayout());
         add(createTopPanel(), BorderLayout.NORTH);
         add(createBottomPanel(),BorderLayout.SOUTH);
-        //TODO: add question shower
+
+        CoverShower coverShower = new CoverShower(null);
+        coverShower.parseMetaInformation(Control.getInstance().getPage());
+        add(coverShower, BorderLayout.CENTER);
+        currentQuestionShower=coverShower;
+        setMinimumSize(new Dimension(400,300));
         pack();
         setTitle("Take Paper");
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 

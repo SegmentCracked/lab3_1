@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +24,14 @@ public class LoadPaperFrame extends JFrame {
 
     class PageAdapter{
         String name;
+        int index;
         int type;
         final static int SURVEY = 0;
         final static int TEST = 1;
 
-        public PageAdapter(String name, int type) {
+        public PageAdapter(String name, int index, int type) {
             this.name = name;
+            this.index = index;
             this.type = type;
         }
 
@@ -40,18 +44,19 @@ public class LoadPaperFrame extends JFrame {
         }
     }
 
-    /*TODO: rewrite loadPaperList() after the Control is refactored */
     private void loadPaperList(){
-        Control control = new Control();
+        Control control = Control.getInstance();
         List<String> pageList = control.getPageName(0);
-        for (String s: pageList){
+        for (int i=0;i<pageList.size();++i){
+            String s = pageList.get(i);
             paperListModel.addElement(s);
-            realPageList.add(new PageAdapter(s, 0));
+            realPageList.add(new PageAdapter(s,i, 0));
         }
         pageList = control.getPageName(1);
-        for(String s: pageList){
+        for(int i=0;i<pageList.size();++i){
+            String s= pageList.get(i);
             paperListModel.addElement(s);
-            realPageList.add(new PageAdapter(s, 0));
+            realPageList.add(new PageAdapter(s, i, 1));
         }
     }
 
@@ -65,6 +70,17 @@ public class LoadPaperFrame extends JFrame {
         btnPanel.add(editPaperBtn);
         takePaperBtn = new JButton("Take it");
         btnPanel.add(takePaperBtn);
+        takePaperBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (paperList.isSelectionEmpty()) return ;
+                PageAdapter pageAdapter = realPageList.get(paperList.getSelectedIndex());
+                Control control = Control.getInstance();
+                control.loadPage(pageAdapter.index, pageAdapter.type);
+                TakePaperFrame f =new TakePaperFrame();
+                f.setVisible(true);
+            }
+        });
         ret.add(tipsLabel, BorderLayout.NORTH);
         ret.add(btnPanel,BorderLayout.SOUTH);
         return ret;

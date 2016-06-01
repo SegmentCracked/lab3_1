@@ -21,11 +21,11 @@ public interface Controller {
 	
 	public void setAnswer(String answer);
 	
-	public String changeItem(int index, String item);
+	public boolean changeItem(int index, String item);
 	
-	public String changeItemNumber(int num);
+	public boolean changeItemNumber(int num);
 	
-	public String remove(int index);
+	public boolean remove(int index);
 	
 	public void setSide(int side);
 	
@@ -33,7 +33,7 @@ public interface Controller {
 	
 	public void setRecordName(String name);
 	
-	public String nextQuestion();
+	public Question nextQuestion();
 	
 	public boolean hasNextQuestion();
 	
