@@ -184,7 +184,7 @@ public class Control implements Controller {
 	}
 	
 	public void answerQuestion(String answer){
-		Answer answerObject = questionControl.answerQuestion(question,answer);
+		Answer answerObject = questionControl.answerQuestion(questionControl.getCurrentQuestion(),answer);
 		record.addAnswer(answerObject);
 	}
 	

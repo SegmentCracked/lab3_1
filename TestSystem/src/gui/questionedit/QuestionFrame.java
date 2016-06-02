@@ -41,6 +41,7 @@ public abstract class QuestionFrame extends JDialog{
 
     protected JButton cancelBtn;
     protected JButton finishBtn;
+    protected JSpinner scoreSpinner;
     protected JPanel createBottomPanel() {
         JPanel ret = new JPanel(new BorderLayout());
         JPanel btnPanel = new JPanel(new GridLayout(1, 2));
@@ -49,6 +50,15 @@ public abstract class QuestionFrame extends JDialog{
         btnPanel.add(cancelBtn);
         btnPanel.add(finishBtn);
         ret.add(btnPanel, BorderLayout.EAST);
+        JPanel scorePanel = new JPanel((new BorderLayout()));
+        scorePanel.add(new JLabel("Score:"), BorderLayout.WEST);
+        scoreSpinner = new JSpinner();
+        scoreSpinner.setEditor(new JSpinner.NumberEditor(scoreSpinner));
+        scoreSpinner.setValue(1);
+        scorePanel.add(scoreSpinner, BorderLayout.CENTER);
+        if (hasAnswer) {
+            ret.add(scorePanel, BorderLayout.WEST);
+        }
         return ret;
     }
 
@@ -65,6 +75,9 @@ public abstract class QuestionFrame extends JDialog{
         }
         if (question instanceof MapQuestion){
             ret = new MapQuestionFrame(hasAnswer);
+        }
+        if (question instanceof EssayQuestion){
+            ret = new EssayQuestionFrame(hasAnswer);
         }
         if (ret!=null){
             ret.setQuestion(question);

@@ -3,6 +3,7 @@ package gui.questionedit;
 import Question.ChoiceQuestion;
 import Question.Question;
 import Question.QuestionFactory;
+import answer.ChoiceAnswer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,34 @@ public class ChoiceQuestionFrame extends QuestionFrame {
     private ChoiceQuestion question;
     private JTextField promptTextField;
     private ItemList itemList;
+    private JList<String> answerList;
+    private DefaultListModel<String> answerListModel;
+    private JPanel createAnswerList(){
+        JPanel ret = new JPanel();
+        ret.setLayout(new BorderLayout());
+        answerListModel = new DefaultListModel<>();
+        answerList = new JList<>();
+        answerList.setModel(answerListModel);
+        JPanel answerBtnPanel = new JPanel(new GridLayout(1,2));
+        JButton addToAnswerBtn = new JButton("Add to answer");
+        JButton removeFromAnswerBtn =new JButton("Remove from answer");
+        addToAnswerBtn.addActionListener((event)->{
+            if (itemList.getList().isSelectionEmpty()) return ;
+            String itemToAdd = itemList.getListModel().get(itemList.getList().getSelectedIndex());
+            if (answerListModel.contains(itemToAdd)) return ;
+            answerListModel.addElement(itemToAdd);
+        });
+        removeFromAnswerBtn.addActionListener((event)->{
+            if (answerList.isSelectionEmpty()) return;
+            answerListModel.remove(answerList.getSelectedIndex());
+        });
+
+        answerBtnPanel.add(addToAnswerBtn);
+        answerBtnPanel.add(removeFromAnswerBtn);
+        ret.add(answerList, BorderLayout.CENTER);
+        ret.add(answerBtnPanel, BorderLayout.NORTH);
+        return ret;
+    }
     private JPanel createMainPanel(){
         JPanel ret =new JPanel(new BorderLayout());
         JPanel topPanel =new JPanel(new GridLayout(3,1));
@@ -28,6 +57,7 @@ public class ChoiceQuestionFrame extends QuestionFrame {
         ret.add(topPanel,BorderLayout.NORTH);
         itemList = new ItemList(ChoiceQuestionFrame.this);
         ret.add(itemList.getList(), BorderLayout.CENTER);
+        if (isHasAnswer()) ret.add(createAnswerList(), BorderLayout.SOUTH);
         return ret;
     }
     public ChoiceQuestionFrame(boolean hasAnswer) {
@@ -51,6 +81,19 @@ public class ChoiceQuestionFrame extends QuestionFrame {
                     question.addItem(itemList.getListModel().get(i));
                 }
                 ChoiceQuestionFrame.this.setVisible(false);
+                if (isHasAnswer()){
+                    StringBuilder answerStr = new StringBuilder();
+                    for (int i=0;i<answerListModel.size();++i){
+                        String answerItem = answerListModel.get(i);
+                        for (int j =0;j<itemList.getListModel().size();++j){
+                            if (answerItem.equals(itemList.getListModel().get(j))){
+                                answerStr.append(j);
+                                answerStr.append(" ");
+                            }
+                        }
+                    }
+                    question.setAnswer(answerStr.toString().trim());
+                }
             }
         });
         addWindowListener(new WindowAdapter() {
@@ -59,7 +102,7 @@ public class ChoiceQuestionFrame extends QuestionFrame {
                 question= null;
             }
         });
-        setMinimumSize(new Dimension(300,200));
+        setMinimumSize(new Dimension(400,300));
         setTitle("Choice Question");
         pack();
         QuestionFactory factory = new QuestionFactory();
@@ -78,6 +121,15 @@ public class ChoiceQuestionFrame extends QuestionFrame {
         java.util.List<String> items = this.question.getItem();
         for (String s: items){
             itemList.getListModel().addElement(s);
+        }
+        if (isHasAnswer()){
+            ChoiceAnswer answer = (ChoiceAnswer) question.getAnswer();
+            if (answer!= null) {
+                int[] answers = answer.getAnswers();
+                for (int ans : answers) {
+                    answerListModel.addElement(itemList.getListModel().get(ans));
+                }
+            }
         }
     }
 }

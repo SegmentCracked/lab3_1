@@ -19,15 +19,18 @@ public class EditPaperFrame extends JFrame {
     private JList<QuestionAdapter> questionList;
     private DefaultListModel<QuestionAdapter> questionListModel;
     private JTextField titleTextField;
-    private int type; //TODO: make change type possible
+    private JComboBox<String> typeComboBox;
     private boolean isNewPage;
-    private ActionListener questionBtnListenerFactory(Class frameClass, boolean hasAnswer){
+    private int getPageType(){
+        return typeComboBox.getSelectedIndex();
+    }
+    private ActionListener questionBtnListenerFactory(Class frameClass){
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 QuestionFrame d = null;
                 try {
-                    d = (QuestionFrame)frameClass.getConstructor(boolean.class).newInstance(hasAnswer);
+                    d = (QuestionFrame)frameClass.getConstructor(boolean.class).newInstance(getPageType() == 1);
                 } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e1) {
                     e1.printStackTrace();
                     return;
@@ -49,15 +52,15 @@ public class EditPaperFrame extends JFrame {
         JMenuItem essayQuestionBtn = new JMenuItem("Essay Question");
         JMenuItem mapQuestionBtn = new JMenuItem("Map Question");
         addQuestionMenu.add(decideQuestionBtn);
-        decideQuestionBtn.addActionListener(questionBtnListenerFactory(DecideQuestionFrame.class, false));
+        decideQuestionBtn.addActionListener(questionBtnListenerFactory(DecideQuestionFrame.class));
         addQuestionMenu.add(choiceQuestionBtn);
-        choiceQuestionBtn.addActionListener(questionBtnListenerFactory(ChoiceQuestionFrame.class, false));
+        choiceQuestionBtn.addActionListener(questionBtnListenerFactory(ChoiceQuestionFrame.class));
         addQuestionMenu.add(rankQuestionBtn);
-        rankQuestionBtn.addActionListener(questionBtnListenerFactory(RankQuestionFrame.class, false));
+        rankQuestionBtn.addActionListener(questionBtnListenerFactory(RankQuestionFrame.class));
         addQuestionMenu.add(shortEssayQuestionBtn);
         addQuestionMenu.add(essayQuestionBtn);
         addQuestionMenu.add(mapQuestionBtn);
-        mapQuestionBtn.addActionListener(questionBtnListenerFactory(MapQuestionFrame.class, false));
+        mapQuestionBtn.addActionListener(questionBtnListenerFactory(MapQuestionFrame.class));
         return addQuestionMenu;
     }
     private ActionListener createMoveBtnActionListener(boolean isUp){
@@ -107,7 +110,7 @@ public class EditPaperFrame extends JFrame {
                 if (questionList.isSelectionEmpty()) return ;
                 int selectedIndex = questionList.getSelectedIndex();
                 Question question = questionListModel.get(selectedIndex).getQuestion();
-                QuestionFrame f = QuestionFrame.createFrameByQuestion(question, false);
+                QuestionFrame f = QuestionFrame.createFrameByQuestion(question, getPageType() ==1 );
                 f.setLocationRelativeTo(EditPaperFrame.this);
                 f.setVisible(true);
                 questionList.setModel(questionListModel);
@@ -144,7 +147,7 @@ public class EditPaperFrame extends JFrame {
                 Control control =Control.getInstance();
 
                 if (isNewPage) {
-                    control.createPage(type);
+                    control.createPage(getPageType());
                     control.setPageName(titleTextField.getText());
                 }
                 else control.getPage().clearPage();
@@ -171,6 +174,15 @@ public class EditPaperFrame extends JFrame {
         ret.add(titleTextField,BorderLayout.CENTER);
         return ret;
     }
+    private JPanel createPageTypeBox(){
+        typeComboBox = new JComboBox<>();
+        typeComboBox.addItem("Survey");
+        typeComboBox.addItem("Test");
+        JPanel ret = new JPanel(new BorderLayout());
+        ret.add(new JLabel("Type:"), BorderLayout.WEST);
+        ret.add(typeComboBox);
+        return ret;
+    }
 
     /**
      * parse page from control
@@ -183,6 +195,8 @@ public class EditPaperFrame extends JFrame {
         }
         this.titleTextField.setText(page.getPageName());
         this.titleTextField.setEditable(false);
+        this.typeComboBox.setSelectedIndex(page.getTypeId());
+        this.typeComboBox.setEditable(false);
         for (int i=0;i<page.getQuestionSize();++i){
             questionListModel.addElement(new QuestionAdapter(page.getQuestion(i)));
         }
@@ -195,8 +209,9 @@ public class EditPaperFrame extends JFrame {
         questionList = new JList<>(questionListModel);
         add(questionList, BorderLayout.CENTER);
 
-        JPanel topPanel =new JPanel(new GridLayout(2,1));
+        JPanel topPanel =new JPanel(new GridLayout(3,1));
         topPanel.add(createPageTitleBox());
+        topPanel.add(createPageTypeBox());
         topPanel.add(createTopBtn());
         add(topPanel, BorderLayout.NORTH);
         add(createBottomBtn(),BorderLayout.SOUTH);

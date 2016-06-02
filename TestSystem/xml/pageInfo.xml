@@ -3,5 +3,6 @@
   <pageName type="survey">Test</pageName>
   <pageName type="survey">Test2</pageName>
   <pageName type="survey">Test3</pageName>
+  <pageName type="test">ProblemWithAnswer</pageName>
 </totalInfo>
 

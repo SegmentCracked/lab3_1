@@ -3,6 +3,7 @@ package gui.questionedit;
 import Question.DecideQuestion;
 import Question.Question;
 import Question.QuestionFactory;
+import answer.DecideAnswer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class DecideQuestionFrame extends QuestionFrame {
         promptTextField =new JTextField("");
         mainPanel.add(promptTextField);
         if (isHasAnswer()){
-            decideAnswer =new JCheckBox("Answer:");
+            decideAnswer =new JCheckBox("Answer is true.");
             mainPanel.add(decideAnswer);
         }
         return mainPanel;
@@ -46,6 +47,9 @@ public class DecideQuestionFrame extends QuestionFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 question.setPrompt(promptTextField.getText());
+                if (hasAnswer){
+                    question.setAnswer(decideAnswer.isSelected()? DecideAnswer.RIGHT : DecideAnswer.FALSE);
+                }
                 DecideQuestionFrame.this.setVisible(false);
             }
         });
@@ -73,5 +77,9 @@ public class DecideQuestionFrame extends QuestionFrame {
         DecideQuestion decideQuestion = (DecideQuestion) questionToShow;
         this.question = decideQuestion;
         promptTextField.setText(decideQuestion.getPrompt());
+        if (question.getAnswer()!=null)
+            if (question.getAnswer().getAnswer().equals(DecideAnswer.RIGHT)){
+            decideAnswer.setSelected(true);
+        }
     }
 }

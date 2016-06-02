@@ -15,6 +15,7 @@ import Paper.Record;
 import Question.QuestionFactory;
 public class QuestionControl {
 	Iterator<Question> iterator;
+	private Question currentQuestion;
 	QuestionFactory x=new QuestionFactory();
 	public List<String> getQuestions(Page page){
 		List<String> ret = new LinkedList<String>();
@@ -112,7 +113,7 @@ public class QuestionControl {
     	iterator=page.iterator();
     }
     public Question nextQuestion(Page page){
-    	return iterator.next();
+    	return currentQuestion = iterator.next();
     }
     public String getQuestion(Question question){
     	return question.getQuestion();
@@ -120,6 +121,9 @@ public class QuestionControl {
     public boolean hasNextQuestion(Page page){
     	return iterator.hasNext();
     }
+	public Question getCurrentQuestion(){
+		return currentQuestion;
+	}
     public Answer answerQuestion(Question question,String answer){
     	question.setAnswer(answer);
     	return question.getAnswer();

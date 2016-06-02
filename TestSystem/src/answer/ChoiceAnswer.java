@@ -29,10 +29,10 @@ public class ChoiceAnswer implements Answer{
 	@Override
 	public void setAnswer(String answer) {
 		// TODO Auto-generated method stub
-		String[] anwsers = answer.split(" ");
-		this.answer = new int[anwsers.length];
+		String[] answers = answer.split(" ");
+		this.answer = new int[answers.length];
 		for(int i=0; i<answer.length(); i++){
-			this.answer[i] = Integer.parseInt(anwsers[i]);
+			this.answer[i] = Integer.parseInt(answers[i]);
 		}
 	}
 	
@@ -49,6 +49,9 @@ public class ChoiceAnswer implements Answer{
 	public boolean match(Answer answer) {
 		return answer.writeAnswer().equals(this.writeAnswer());
 	}
-	
+
+	public int[] getAnswers(){
+		return answer.clone();
+	}
 	
 }

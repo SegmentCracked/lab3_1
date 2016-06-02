@@ -8,7 +8,8 @@ import Question.Question;
 public abstract class Page {
 	
 	String pageName;
-	String type;
+	int type;
+	public static final String TYPE_LIST[]=new String[]{"survey","test"};
 	
 	List<Question> questionList = new LinkedList<Question>();
 	
@@ -37,11 +38,20 @@ public abstract class Page {
 	}
 	
 	public String getType(){
+		return TYPE_LIST[type];
+	}
+	public int getTypeId(){
 		return type;
 	}
 	
 	public void setType(String type){
-		this.type = type;
+		for (int i=0;i<TYPE_LIST.length;++i){
+			if (type.equals(TYPE_LIST[i])) {
+				this.type = i;
+				return;
+			}
+		}
+		throw new RuntimeException("Unknown type");
 	}
 	
 	public Iterator<Question> iterator(){

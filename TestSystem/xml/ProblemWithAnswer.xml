@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paper.Page type="test">
+  <pageName>ProblemWithAnswer</pageName>
+  <score>0</score>
+  <questions>
+    <question type="0" isScore="1" answer="1">
+      <prompt>Hello</prompt>
+      <answer>1</answer>
+      <score>0</score>
+    </question>
+  </questions>
+</paper.Page>
+
