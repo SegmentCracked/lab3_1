@@ -74,8 +74,10 @@ public class MainMenuFrame extends JFrame {
     }
     public MainMenuFrame(){
         setLayout(new BorderLayout());
-        add(createBtnPanel(),BorderLayout.CENTER);
+        add(createBtnPanel(),BorderLayout.SOUTH);
         pack();
+        setTitle("Test System");
+        setMinimumSize(new Dimension(400,200));
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

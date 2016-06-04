@@ -13,6 +13,8 @@ import Question.MapQuestion;
 import answer.Answer;
 import Paper.Record;
 import Question.QuestionFactory;
+import answer.AnswerFactory;
+
 public class QuestionControl {
 	Iterator<Question> iterator;
 	private Question currentQuestion;
@@ -125,14 +127,14 @@ public class QuestionControl {
 		return currentQuestion;
 	}
     public Answer answerQuestion(Question question,String answer){
-    	question.setAnswer(answer);
-    	return question.getAnswer();
+		AnswerFactory factory =new AnswerFactory();
+    	return factory.buildAnswerByQuestion(question,answer);
     }
     public int grade(Page page,Record record){
     	int total=0;
     	for(int i=0;i<page.getQuestionSize();i++)
     		if(page.getQuestion(i).match(record.getAnswer(i)))
-    			total=total+page.getQuestion(i).getScore()+total;
+    			total+=page.getQuestion(i).getScore();
     	return total;
     }
 	public void setScore(Question question, int score) {

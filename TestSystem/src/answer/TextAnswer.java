@@ -29,7 +29,7 @@ public class TextAnswer implements Answer{
 
 	@Override
 	public boolean match(Answer answer) {
-		return answer.writeAnswer().equals(this.writeAnswer());
+		return false;
 	}
 
 }

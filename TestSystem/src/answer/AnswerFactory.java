@@ -1,5 +1,9 @@
 package answer;
 
+import Question.*;
+
+import java.util.concurrent.TimeoutException;
+
 /**
  * 用于生产Answer对象
  * Created by Mengxiao Lin on 2016/5/29.
@@ -27,5 +31,16 @@ public class AnswerFactory {
             case AnswerType.RANK: return new RankAnswer();
             default: throw new RuntimeException("No such answer type!");
         }
+    }
+
+    public Answer buildAnswerByQuestion(Question question, String answerStr){
+        Answer ret = null;
+        if (question instanceof DecideQuestion) ret= new DecideAnswer();
+        if (question instanceof ChoiceQuestion) ret= new ChoiceAnswer();
+        if (question instanceof MapQuestion) ret= new MapAnswer();
+        if (question instanceof RankQuestion) ret= new RankAnswer();
+        if (question instanceof TextAnswer) ret = new TextAnswer();
+        if (ret!=null) ret.setAnswer(answerStr);
+        return ret;
     }
 }

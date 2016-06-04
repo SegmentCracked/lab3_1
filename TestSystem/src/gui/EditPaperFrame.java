@@ -232,6 +232,7 @@ public class EditPaperFrame extends JFrame {
         add(createBottomBtn(),BorderLayout.SOUTH);
         pack();
         setMinimumSize(new Dimension(400,300));
+        setExtendedState(Frame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setTitle("Edit Paper");
         isNewPage = true;

@@ -1,11 +1,13 @@
 package Question;
 
 import answer.Answer;
+import answer.TextAnswer;
 
 public class EssayQuestion implements Question {
 
 	int score;
 	String prompt;
+	TextAnswer textAnswer;
 
 	@Override
 	public String getQuestion(){
@@ -14,8 +16,8 @@ public class EssayQuestion implements Question {
 
 	@Override
 	public void setAnswer(String answer) {
-		// TODO Auto-generated method stub
-		
+		textAnswer = new TextAnswer();
+		textAnswer.setAnswer(answer);
 	}
 
 	@Override
@@ -45,12 +47,10 @@ public class EssayQuestion implements Question {
 
 	@Override
 	public Answer getAnswer() {
-		// TODO Auto-generated method stub
-		return null;
+		return textAnswer;
 	}
 	@Override
 	public boolean match(Answer answer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

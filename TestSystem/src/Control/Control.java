@@ -83,6 +83,7 @@ public class Control implements Controller {
 		questionControl.initIterator(page);
 		record = new Record();
 	}
+
 	public void addQuestionToPage(Question question){
 		page.addQuestion(question);
 	}
@@ -205,6 +206,9 @@ public class Control implements Controller {
 		ret.addAll(recordName);
 		return ret;
 	}
+	public Record getRecordByName(String recordName){
+		return io.readRecord(recordName);
+	}
 	public String getOutcome(int index, int type){
 		this.loadPage(index, type);
 		loadRecord();
@@ -221,8 +225,6 @@ public class Control implements Controller {
 		}
 		return ret;
 	}
-
-
 	public Page getPage() {
 		return page;
 	}

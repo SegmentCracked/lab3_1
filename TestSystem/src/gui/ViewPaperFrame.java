@@ -1,11 +1,15 @@
 package gui;
 
 import Control.Control;
+import Control.QuestionControl;
 import Paper.Page;
-import gui.util.PageAdapter;
+import Paper.Record;
+import Paper.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Mengxiao Lin on 2016/6/4.
@@ -47,6 +51,18 @@ public class ViewPaperFrame extends JFrame{
     private JPanel createBottomBtnPanel(){
         JPanel ret = new JPanel(new GridLayout(1,2));
         JButton gradeTestBtn = new JButton("Grade Test");
+        if (Control.getInstance().getPage().getTypeId() == 0){
+            gradeTestBtn.setEnabled(false);
+        }
+        gradeTestBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (recordList.isSelectionEmpty()) return ;
+                Record recordToGrade = Control.getInstance().getRecordByName(recordListModel.get(recordList.getSelectedIndex()));
+                RecordReportFrame f = new RecordReportFrame((Test)Control.getInstance().getPage(),recordToGrade);
+                f.setVisible(true);
+            }
+        });
         JButton outcomeBtn = new JButton("Outcome");
         ret.add(gradeTestBtn);
         ret.add(outcomeBtn);
