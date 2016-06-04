@@ -1,5 +1,6 @@
 package Question;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -144,5 +145,17 @@ public class MapQuestion implements Question {
 	@Override
 	public boolean match(Answer answer) {
 		return this.answer.match(answer);
+	}
+
+	public List<String> getSide1() {
+		ArrayList<String> ret = new ArrayList<>();
+		ret.addAll(side1);
+		return ret;
+	}
+
+	public List<String> getSide2() {
+		ArrayList<String> ret = new ArrayList<>();
+		ret.addAll(side2);
+		return ret;
 	}
 }

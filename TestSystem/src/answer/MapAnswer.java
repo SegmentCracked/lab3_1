@@ -18,7 +18,14 @@ public class MapAnswer implements Answer{
 		}
 		return ret;
 	}
-
+	public String[][] getAnswerPairs(){
+		String[][] ret = new String[map.size()][2];
+		for(int i=0; i<map.size(); i++){
+			ret[i][0]=side1.get(i);
+			ret[i][1]=side2.get(map.get(i));
+		}
+		return ret;
+	}
 
 	@Override
 	public void setAnswer(String answer) {
