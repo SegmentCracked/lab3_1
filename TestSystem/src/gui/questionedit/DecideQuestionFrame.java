@@ -80,6 +80,7 @@ public class DecideQuestionFrame extends QuestionFrame {
         if (question.getAnswer()!=null)
             if (question.getAnswer().getAnswer().equals(DecideAnswer.RIGHT)){
             decideAnswer.setSelected(true);
+                question.setScore(getScoreValue());
         }
     }
 }

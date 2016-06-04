@@ -130,6 +130,7 @@ public class ChoiceQuestionFrame extends QuestionFrame {
                     answerListModel.addElement(itemList.getListModel().get(ans));
                 }
             }
+            question.setScore(this.getScoreValue());
         }
     }
 }

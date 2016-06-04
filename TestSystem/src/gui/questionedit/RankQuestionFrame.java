@@ -3,12 +3,16 @@ package gui.questionedit;
 import Question.Question;
 import Question.RankQuestion;
 import Question.QuestionFactory;
+import answer.RankAnswer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by Mengxiao Lin on 2016/5/30.
@@ -16,17 +20,46 @@ import java.awt.event.WindowEvent;
 public class RankQuestionFrame extends QuestionFrame {
     private RankQuestion question;
     private JTextField promptTextField;
-    private ItemList itemList;
+    private ItemList choiceList, answerList;
+    private JPanel choicePanel, answerPanel, listPanel;
+    private void createListPanel(){
+        choicePanel = new JPanel(new BorderLayout());
+        choicePanel.add(new JLabel("Choices:"),BorderLayout.NORTH);
+        choiceList = new ItemList(RankQuestionFrame.this);
+        choicePanel.add(choiceList.getList(), BorderLayout.CENTER);
+        answerPanel = new JPanel(new BorderLayout());
+        answerPanel.add(new JLabel("Answer:"),BorderLayout.NORTH);
+        answerList = new ItemList(RankQuestionFrame.this);
+        answerPanel.add(answerList.getList(),BorderLayout.CENTER);
+
+        answerList.hideAddMenuItem();
+        answerList.hideRemoveMenuItem();
+        choiceList.addItemAddListener(item->{
+            answerList.getListModel().addElement(item);
+            return null;
+        });
+        choiceList.addItemRemoveListener(item ->{
+            answerList.getListModel().removeElement(item);
+            return null;
+        });
+
+        if (isHasAnswer()) {
+            listPanel = new JPanel(new GridLayout(2, 1));
+            listPanel.add(choicePanel);
+            listPanel.add(answerPanel);
+        }else{
+            listPanel=choicePanel;
+        }
+    }
     private JPanel createMainPanel(){
         JPanel ret =new JPanel(new BorderLayout());
-        JPanel topPanel =new JPanel(new GridLayout(3,1));
+        JPanel topPanel =new JPanel(new GridLayout(2,1));
         topPanel.add(new JLabel("Prompt:"));
         promptTextField=new JTextField();
         topPanel.add(promptTextField);
-        topPanel.add(new JLabel("Choices:"));
         ret.add(topPanel,BorderLayout.NORTH);
-        itemList = new ItemList(RankQuestionFrame.this);
-        ret.add(itemList.getList(), BorderLayout.CENTER);
+        createListPanel();
+        ret.add(listPanel, BorderLayout.CENTER);
         return ret;
     }
     public RankQuestionFrame(boolean hasAnswer) {
@@ -47,9 +80,30 @@ public class RankQuestionFrame extends QuestionFrame {
             public void actionPerformed(ActionEvent e) {
                 question.setPrompt(promptTextField.getText());
                 question.clearItem();
-                for (int i=0;i<itemList.getListModel().size();++i){
-                    question.addItem(itemList.getListModel().get(i));
+                for (int i=0;i<choiceList.getListModel().size();++i){
+                    question.addItem(choiceList.getListModel().get(i));
                 }
+
+                //build answer string
+                StringBuilder answerStringBuilder = new StringBuilder();
+                ArrayList<String> answerStrList = new ArrayList<>();
+                for (int i=0;i<answerList.getListModel().size();++i){
+                    answerStrList.add(answerList.getListModel().get(i));
+                }
+                Object[] arrayIndexList = answerStrList.stream().map(s -> {
+                    for (int i=0;i<choiceList.getListModel().size();++i){
+                        if (choiceList.getListModel().get(i).equals(s)){
+                            return i;
+                        }
+                    }
+                    return -1;
+                }).toArray();
+                for (int i=0;i<arrayIndexList.length;++i){
+                    answerStringBuilder.append(arrayIndexList[i]);
+                    if (i!=arrayIndexList.length-1) answerStringBuilder.append(" ");
+                }
+                question.setAnswer(answerStringBuilder.toString());
+
                 RankQuestionFrame.this.setVisible(false);
             }
         });
@@ -59,7 +113,7 @@ public class RankQuestionFrame extends QuestionFrame {
                 question= null;
             }
         });
-        setMinimumSize(new Dimension(300,200));
+        setMinimumSize(new Dimension(400,400));
         setTitle("Rank Question");
         pack();
         QuestionFactory factory = new QuestionFactory();
@@ -78,7 +132,21 @@ public class RankQuestionFrame extends QuestionFrame {
         this.promptTextField.setText(this.question.getPrompt());
         java.util.List<String> items = this.question.getItem();
         for (String s: items){
-            itemList.getListModel().addElement(s);
+            choiceList.getListModel().addElement(s);
+        }
+        if (isHasAnswer()){
+            if(question.getAnswer() == null){
+                for (String s: items){
+                    answerList.getListModel().addElement(s);
+                }
+            }else{
+                RankAnswer answer = (RankAnswer) question.getAnswer();
+                Scanner sin = new Scanner(answer.getAnswer());
+                while (sin.hasNext()) {
+                    answerList.getListModel().addElement(sin.next());
+                }
+            }
+            question.setScore(this.getScoreValue());
         }
     }
 }

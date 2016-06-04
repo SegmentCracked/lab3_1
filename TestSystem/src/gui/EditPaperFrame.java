@@ -48,7 +48,6 @@ public class EditPaperFrame extends JFrame {
         JMenuItem decideQuestionBtn = new JMenuItem("Decide Question");
         JMenuItem choiceQuestionBtn = new JMenuItem("Choice Question");
         JMenuItem rankQuestionBtn = new JMenuItem("Rank Question");
-        JMenuItem shortEssayQuestionBtn =new JMenuItem("Short Essay Question");
         JMenuItem essayQuestionBtn = new JMenuItem("Essay Question");
         JMenuItem mapQuestionBtn = new JMenuItem("Map Question");
         addQuestionMenu.add(decideQuestionBtn);
@@ -57,8 +56,8 @@ public class EditPaperFrame extends JFrame {
         choiceQuestionBtn.addActionListener(questionBtnListenerFactory(ChoiceQuestionFrame.class));
         addQuestionMenu.add(rankQuestionBtn);
         rankQuestionBtn.addActionListener(questionBtnListenerFactory(RankQuestionFrame.class));
-        addQuestionMenu.add(shortEssayQuestionBtn);
         addQuestionMenu.add(essayQuestionBtn);
+        essayQuestionBtn.addActionListener(questionBtnListenerFactory(EssayQuestionFrame.class));
         addQuestionMenu.add(mapQuestionBtn);
         mapQuestionBtn.addActionListener(questionBtnListenerFactory(MapQuestionFrame.class));
         return addQuestionMenu;

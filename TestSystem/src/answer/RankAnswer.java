@@ -49,7 +49,6 @@ public class RankAnswer implements Answer{
 	@Override
 	public boolean match(Answer answer) {
 		return answer.writeAnswer().equals(this.writeAnswer());
-
 	}
 
 }

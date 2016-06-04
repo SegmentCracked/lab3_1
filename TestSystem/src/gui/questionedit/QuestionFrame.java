@@ -84,4 +84,7 @@ public abstract class QuestionFrame extends JDialog{
         }
         return ret;
     }
+    public int getScoreValue(){
+        return (Integer) scoreSpinner.getValue();
+    }
 }
