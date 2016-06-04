@@ -38,7 +38,7 @@ public class CoverShower extends QuestionShower {
     }
 
     @Override
-    public Answer getAnswer() {
+    public String getAnswer() {
         return null;
     }
 }

@@ -31,7 +31,7 @@ public class ChoiceAnswer implements Answer{
 		// TODO Auto-generated method stub
 		String[] answers = answer.split(" ");
 		this.answer = new int[answers.length];
-		for(int i=0; i<answer.length(); i++){
+		for(int i=0; i<answers.length; i++){
 			this.answer[i] = Integer.parseInt(answers[i]);
 		}
 	}

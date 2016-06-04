@@ -53,16 +53,14 @@ public class DecideQuestionShower extends QuestionShower {
     }
 
     @Override
-    public Answer getAnswer() {
+    public String getAnswer() {
         if (!isFilled()) return null;
-        AnswerFactory factory = new AnswerFactory();
-        DecideAnswer answer = (DecideAnswer) factory.createAnswer(AnswerFactory.AnswerType.DECIDE);
         if (trueBtn.isSelected()){
-            answer.setAnswer(DecideAnswer.RIGHT);
+            return DecideAnswer.RIGHT;
         }
         if (falseBtn.isSelected()){
-            answer.setAnswer(DecideAnswer.FALSE);
+            return DecideAnswer.FALSE;
         }
-        return answer;
+        return null;
     }
 }
