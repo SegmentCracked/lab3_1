@@ -6,17 +6,28 @@ import answer.Answer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Mengxiao Lin on 2016/6/1.
  */
 public class CoverShower extends QuestionShower {
     private JTextArea coverContent;
+    private JTextField nameTextField;
     public CoverShower(Question questionToShow) {
         super(questionToShow);
-        setLayout(new GridLayout(1,1));
+        setLayout(new BorderLayout());
         coverContent = new JTextArea();
-        add(coverContent);
+        add(coverContent,BorderLayout.CENTER);
+        JPanel inputPanel =new JPanel(new GridLayout(2,2));
+        inputPanel.add(new JLabel("Name:"));
+        nameTextField = new JTextField();
+        inputPanel.add(nameTextField);
+        inputPanel.add(new JLabel("Time:"));
+        Date currentDate = Calendar.getInstance().getTime();
+        inputPanel.add(new JLabel(currentDate.toString()));
+        add(inputPanel, BorderLayout.SOUTH);
     }
     public void parseMetaInformation(Page page){
         StringBuilder content = new StringBuilder();
@@ -34,11 +45,11 @@ public class CoverShower extends QuestionShower {
 
     @Override
     public boolean isFilled() {
-        return true;
+        return nameTextField.getText().length()!=0;
     }
 
     @Override
     public String getAnswer() {
-        return null;
+        return nameTextField.getText();
     }
 }

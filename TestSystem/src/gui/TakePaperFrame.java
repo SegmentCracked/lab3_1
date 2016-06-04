@@ -18,20 +18,19 @@ import java.awt.event.ActionListener;
 public class TakePaperFrame extends JFrame {
     private JButton nextQuestionBtn;
     private JButton giveUpBtn;
-    private JButton navPreviousBtn;
-    private JButton navNextBtn;
     private JLabel titleCountTips;
     private QuestionShower currentQuestionShower;
-
+    private int currentQuestionPos = 0;
+    public String getTextForCountTips(){
+        Control control = Control.getInstance();
+        int questionSize = control.getPage().getQuestionSize();
+        return currentQuestionPos+"/"+questionSize;
+    }
     private JPanel createTopPanel(){
         JPanel ret = new JPanel(new BorderLayout());
-        navPreviousBtn = new JButton("<-");
-        navNextBtn = new JButton("->");
-        titleCountTips = new JLabel("xx/xx");
+        titleCountTips = new JLabel(getTextForCountTips());
         titleCountTips.setVerticalAlignment(JLabel.CENTER);
         titleCountTips.setHorizontalAlignment(JLabel.CENTER);
-        ret.add(navPreviousBtn,BorderLayout.WEST);
-        ret.add(navNextBtn, BorderLayout.EAST);
         ret.add(titleCountTips, BorderLayout.CENTER);
         return ret;
     }
@@ -61,16 +60,24 @@ public class TakePaperFrame extends JFrame {
                 }
                 Control control = Control.getInstance();
                 QuestionShowerFactory questionShowerFactory = new QuestionShowerFactory();
-                if (! (currentQuestionShower instanceof CoverShower)){
+                if (currentQuestionShower instanceof CoverShower){
+                    control.setRecordName(currentQuestionShower.getAnswer());
+                }else{
                     control.answerQuestion(currentQuestionShower.getAnswer());
                 }
                 if (control.hasNextQuestion()){
                     Question question = control.nextQuestion();
+                    currentQuestionPos++;
                     TakePaperFrame.this.remove(currentQuestionShower);
                     currentQuestionShower = questionShowerFactory.createQuestionShowerByQuestion(question);
                     add(currentQuestionShower, BorderLayout.CENTER);
+                    TakePaperFrame.this.revalidate();
+                    titleCountTips.setText(getTextForCountTips());
+                }else{
+                    control.saveAnswer();
+                    JOptionPane.showConfirmDialog(TakePaperFrame.this, "You finished all the questions!","TestSystem",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    TakePaperFrame.this.setVisible(false);
                 }
-                TakePaperFrame.this.revalidate();
             }
         });
         btnPanel.add(nextQuestionBtn);
