@@ -196,10 +196,18 @@ public class Control implements Controller {
 	public void setScore(int score){
 		questionControl.setScore(question, score);
 	}
-	
+
+	public void loadRecord(){
+		recordName = io.readRecordInfo(page.getPageName());
+	}
+	public List<String> getRecordName(){
+		List<String> ret = new ArrayList<>();
+		ret.addAll(recordName);
+		return ret;
+	}
 	public String getOutcome(int index, int type){
 		this.loadPage(index, type);
-		recordName = io.readRecordInfo(page.getPageName());
+		loadRecord();
 		List<Iterator<Answer>> recordList = new LinkedList<Iterator<Answer>>();
 		for(int i=0; i<recordName.size(); i++){
 			recordList.add(io.readRecord(recordName.get(i)).iterator());
@@ -213,6 +221,7 @@ public class Control implements Controller {
 		}
 		return ret;
 	}
+
 
 	public Page getPage() {
 		return page;

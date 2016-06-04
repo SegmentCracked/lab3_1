@@ -9,6 +9,7 @@ public abstract class Page {
 	
 	String pageName;
 	int type;
+	int timeLimit;
 	public static final String TYPE_LIST[]=new String[]{"survey","test"};
 	
 	List<Question> questionList = new LinkedList<Question>();
@@ -76,8 +77,13 @@ public abstract class Page {
 			// TODO Auto-generated method stub
 			return questionList.get(questionIndex++);
 		}
-		
-		
 	}
-	
+
+	public int getTimeLimit() {
+		return timeLimit;
+	}
+
+	public void setTimeLimit(int timeLimit) {
+		this.timeLimit = timeLimit;
+	}
 }

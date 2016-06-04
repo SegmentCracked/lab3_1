@@ -1,6 +1,7 @@
 package gui;
 
 import Control.Control;
+import gui.util.PageAdapter;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -22,29 +23,8 @@ public class LoadPaperFrame extends JFrame {
     private List<PageAdapter> realPageList;
     private JButton editPaperBtn;
     private JButton takePaperBtn;
+    private JButton viewPaperBtn;
     private JTextArea tipsLabel;
-
-    class PageAdapter{
-        String name;
-        int index;
-        int type;
-        final static int SURVEY = 0;
-        final static int TEST = 1;
-
-        public PageAdapter(String name, int index, int type) {
-            this.name = name;
-            this.index = index;
-            this.type = type;
-        }
-
-        @Override
-        public String toString() {
-            String ret = "Page Name: "+name +"\nType: ";
-            if (type == SURVEY) ret+="Survey";
-            if (type == TEST) ret+="Test";
-            return ret;
-        }
-    }
 
     private void loadPaperList(){
         Control control = Control.getInstance();
@@ -54,13 +34,15 @@ public class LoadPaperFrame extends JFrame {
         for (int i=0;i<pageList.size();++i){
             String s = pageList.get(i);
             paperListModel.addElement(s);
-            realPageList.add(new PageAdapter(s,i, 0));
+            control.loadPage(i,0);
+            realPageList.add(new PageAdapter(i, control.getPage()));
         }
         pageList = control.getPageName(1);
         for(int i=0;i<pageList.size();++i){
             String s= pageList.get(i);
             paperListModel.addElement(s);
-            realPageList.add(new PageAdapter(s, i, 1));
+            control.loadPage(i,1);
+            realPageList.add(new PageAdapter(i, control.getPage()));
         }
     }
 
@@ -69,18 +51,20 @@ public class LoadPaperFrame extends JFrame {
         tipsLabel = new JTextArea();
         tipsLabel.setEditable(false);
         tipsLabel.setBorder(BorderFactory.createLoweredBevelBorder());
-        JPanel btnPanel = new JPanel(new GridLayout(2,1));
-        editPaperBtn =new JButton("Edit");
+        JPanel btnPanel = new JPanel(new GridLayout(3,1));
+        editPaperBtn =new JButton("Edit it");
         btnPanel.add(editPaperBtn);
         takePaperBtn = new JButton("Take it");
         btnPanel.add(takePaperBtn);
+        viewPaperBtn = new JButton("View it");
+        btnPanel.add(viewPaperBtn);
         editPaperBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (paperList.isSelectionEmpty()) return ;
                 PageAdapter pageAdapter = realPageList.get(paperList.getSelectedIndex());
                 Control control = Control.getInstance();
-                control.loadPage(pageAdapter.index, pageAdapter.type);
+                control.loadPage(pageAdapter.getIndex(), pageAdapter.getType());
                 EditPaperFrame f = new EditPaperFrame();
                 f.addWindowListener(new WindowAdapter() {
                     @Override
@@ -98,8 +82,19 @@ public class LoadPaperFrame extends JFrame {
                 if (paperList.isSelectionEmpty()) return ;
                 PageAdapter pageAdapter = realPageList.get(paperList.getSelectedIndex());
                 Control control = Control.getInstance();
-                control.loadPage(pageAdapter.index, pageAdapter.type);
+                control.loadPage(pageAdapter.getIndex(), pageAdapter.getType());
                 TakePaperFrame f =new TakePaperFrame();
+                f.setVisible(true);
+            }
+        });
+        viewPaperBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (paperList.isSelectionEmpty()) return;
+                PageAdapter pageAdapter = realPageList.get(paperList.getSelectedIndex());
+                Control control = Control.getInstance();
+                control.loadPage(pageAdapter.getIndex(), pageAdapter.getType());
+                ViewPaperFrame f =new ViewPaperFrame();
                 f.setVisible(true);
             }
         });
@@ -127,7 +122,7 @@ public class LoadPaperFrame extends JFrame {
                 tipsLabel.setText(realPageList.get(selectedIndex).toString());
             }
         });
-        setMinimumSize(new Dimension(300,300));
+        setMinimumSize(new Dimension(500,400));
         pack();
         setTitle("Load Paper");
         setLocationRelativeTo(null);

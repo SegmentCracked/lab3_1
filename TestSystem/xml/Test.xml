@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <paper.Page type="survey">
   <pageName>Test</pageName>
+  <timeLimit>0</timeLimit>
   <questions>
     <question type="0" isScore="1" answer="0">
       <prompt>Hello</prompt>

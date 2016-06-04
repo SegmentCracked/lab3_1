@@ -20,6 +20,7 @@ public class EditPaperFrame extends JFrame {
     private DefaultListModel<QuestionAdapter> questionListModel;
     private JTextField titleTextField;
     private JComboBox<String> typeComboBox;
+    private JSpinner timeLimitSpinner;
     private boolean isNewPage;
     private int getPageType(){
         return typeComboBox.getSelectedIndex();
@@ -150,6 +151,7 @@ public class EditPaperFrame extends JFrame {
                     control.setPageName(titleTextField.getText());
                 }
                 else control.getPage().clearPage();
+                control.getPage().setTimeLimit((int)timeLimitSpinner.getValue());
                 for (int i=0;i<questionListModel.size();++i){
                     Question question = questionListModel.get(i).getQuestion();
                     control.addQuestionToPage(question);
@@ -182,7 +184,17 @@ public class EditPaperFrame extends JFrame {
         ret.add(typeComboBox);
         return ret;
     }
-
+    private JPanel createTimeLimitBox(){
+        JPanel ret = new JPanel(new BorderLayout());
+        timeLimitSpinner = new JSpinner();
+        JSpinner.NumberEditor timeLimitEditor= new JSpinner.NumberEditor(timeLimitSpinner);
+        timeLimitSpinner.setEditor(timeLimitEditor);
+        timeLimitEditor.getModel().setMinimum(0);
+        ret.add(new JLabel("Time Limit(min): "),BorderLayout.WEST);
+        ret.add(timeLimitSpinner, BorderLayout.CENTER);
+        ret.add(new JLabel("(0 is unlimited!)"),BorderLayout.EAST);
+        return ret;
+    }
     /**
      * parse page from control
      */
@@ -196,10 +208,13 @@ public class EditPaperFrame extends JFrame {
         this.titleTextField.setEditable(false);
         this.typeComboBox.setSelectedIndex(page.getTypeId());
         this.typeComboBox.setEditable(false);
+        this.typeComboBox.setEnabled(false);
+        this.typeComboBox.setForeground(Color.BLACK);
         for (int i=0;i<page.getQuestionSize();++i){
             questionListModel.addElement(new QuestionAdapter(page.getQuestion(i)));
         }
         isNewPage = false;
+        timeLimitSpinner.setValue(page.getTimeLimit());
     }
 
     public EditPaperFrame(){
@@ -208,9 +223,10 @@ public class EditPaperFrame extends JFrame {
         questionList = new JList<>(questionListModel);
         add(questionList, BorderLayout.CENTER);
 
-        JPanel topPanel =new JPanel(new GridLayout(3,1));
+        JPanel topPanel =new JPanel(new GridLayout(4,1));
         topPanel.add(createPageTitleBox());
         topPanel.add(createPageTypeBox());
+        topPanel.add(createTimeLimitBox());
         topPanel.add(createTopBtn());
         add(topPanel, BorderLayout.NORTH);
         add(createBottomBtn(),BorderLayout.SOUTH);
