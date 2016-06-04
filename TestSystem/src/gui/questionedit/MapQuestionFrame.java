@@ -7,6 +7,7 @@ import Question.QuestionFactory;
 import Question.QuestionFactory.QuestionType;
 import answer.MapAnswer;
 import gui.util.ComboBoxDialog;
+import gui.util.MapItemAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,35 +24,7 @@ public class MapQuestionFrame extends QuestionFrame{
     private JTextField promptTextField;
     private ItemList leftList, rightList;
 
-    class MapItemAdapter{
-        private String leftItem, rightItem;
 
-        public MapItemAdapter(String leftItem) {
-            this.leftItem = leftItem;
-            this.rightItem = null;
-        }
-
-        public void setLeftItem(String leftItem) {
-            this.leftItem = leftItem;
-        }
-
-        public void setRightItem(String rightItem) {
-            this.rightItem = rightItem;
-        }
-
-        public String getRightItem() {
-            return rightItem;
-        }
-
-        public String getLeftItem() {
-            return leftItem;
-        }
-
-        @Override
-        public String toString() {
-            return leftItem + " <=> "+rightItem;
-        }
-    }
 
     private JList<MapItemAdapter> answerList;
     private DefaultListModel<MapItemAdapter> answerListModel;
@@ -84,7 +57,7 @@ public class MapQuestionFrame extends QuestionFrame{
         });
         leftList.addItemRemoveListener(item->{
             for (int i=0;i<answerListModel.size();++i){
-                if (answerListModel.get(i).leftItem.equals(item)){
+                if (answerListModel.get(i).getLeftItem().equals(item)){
                     answerListModel.remove(i);
                     return null;
                 }

@@ -16,6 +16,12 @@ public class QuestionShowerFactory {
         if (question instanceof RankQuestion){
             return new RankQuestionShower(question);
         }
+        if (question instanceof MapQuestion){
+            return new MapQuestionShower(question);
+        }
+        if (question instanceof EssayQuestion){
+            return new EssayQuestionShower(question);
+        }
         return null;
     }
 }

@@ -51,6 +51,7 @@ public class EssayQuestionFrame extends QuestionFrame {
                 question= null;
             }
         });
+        pack();
     }
 
     @Override
