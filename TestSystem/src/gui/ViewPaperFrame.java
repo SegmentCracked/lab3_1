@@ -62,6 +62,13 @@ public class ViewPaperFrame extends JFrame{
             }
         });
         JButton outcomeBtn = new JButton("Outcome");
+        outcomeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OutcomeReportFrame outcomeReportFrame =new OutcomeReportFrame();
+                outcomeReportFrame.setVisible(true);
+            }
+        });
         ret.add(gradeTestBtn);
         ret.add(outcomeBtn);
         return ret;

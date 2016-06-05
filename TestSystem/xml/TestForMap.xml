@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <paper.Page type="test">
   <pageName>TestForMap</pageName>
+  <author>YMR</author>
   <timeLimit>0</timeLimit>
-  <score>5</score>
+  <score>1</score>
   <questions>
     <question type="5" isScore="1" answer="1">
       <prompt>Map Problem</prompt>

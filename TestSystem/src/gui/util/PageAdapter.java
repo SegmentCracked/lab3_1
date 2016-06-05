@@ -10,6 +10,7 @@ public class PageAdapter {
     private int index;
     private int type;
     private int timeLimit;
+    private String authorName;
     public final static int SURVEY = 0;
     public final static int TEST = 1;
 
@@ -18,11 +19,13 @@ public class PageAdapter {
         this.index = index;
         this.type = page.getTypeId();
         this.timeLimit = page.getTimeLimit();
+        this.authorName = page.getAuthor();
     }
 
     @Override
     public String toString() {
-        String ret = "Page Name: "+name +"\nType: ";
+        String ret = "Page Name: "+name +"\nAuthor: "+authorName;
+        ret+="\nType: ";
         if (type == SURVEY) ret+="Survey";
         if (type == TEST) ret+="Test";
         if (timeLimit!=0) {

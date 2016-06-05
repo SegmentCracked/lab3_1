@@ -19,6 +19,7 @@ public class EditPaperFrame extends JFrame {
     private JList<QuestionAdapter> questionList;
     private DefaultListModel<QuestionAdapter> questionListModel;
     private JTextField titleTextField;
+    private JTextField authorNameTextField;
     private JComboBox<String> typeComboBox;
     private JSpinner timeLimitSpinner;
     private boolean isNewPage;
@@ -152,6 +153,7 @@ public class EditPaperFrame extends JFrame {
                 }
                 else control.getPage().clearPage();
                 control.getPage().setTimeLimit((int)timeLimitSpinner.getValue());
+                control.getPage().setAuthor(authorNameTextField.getText());
                 for (int i=0;i<questionListModel.size();++i){
                     Question question = questionListModel.get(i).getQuestion();
                     control.addQuestionToPage(question);
@@ -182,6 +184,13 @@ public class EditPaperFrame extends JFrame {
         JPanel ret = new JPanel(new BorderLayout());
         ret.add(new JLabel("Type:"), BorderLayout.WEST);
         ret.add(typeComboBox);
+        return ret;
+    }
+    private JPanel createAuthorNameBox(){
+        JPanel ret = new JPanel(new BorderLayout());
+        ret.add(new JLabel("Author Name:"), BorderLayout.WEST);
+        authorNameTextField = new JTextField();
+        ret.add(authorNameTextField);
         return ret;
     }
     private JPanel createTimeLimitBox(){
@@ -215,6 +224,7 @@ public class EditPaperFrame extends JFrame {
         }
         isNewPage = false;
         timeLimitSpinner.setValue(page.getTimeLimit());
+        this.authorNameTextField.setText(page.getAuthor());
     }
 
     public EditPaperFrame(){
@@ -223,9 +233,10 @@ public class EditPaperFrame extends JFrame {
         questionList = new JList<>(questionListModel);
         add(questionList, BorderLayout.CENTER);
 
-        JPanel topPanel =new JPanel(new GridLayout(4,1));
+        JPanel topPanel =new JPanel(new GridLayout(5,1));
         topPanel.add(createPageTitleBox());
         topPanel.add(createPageTypeBox());
+        topPanel.add(createAuthorNameBox());
         topPanel.add(createTimeLimitBox());
         topPanel.add(createTopBtn());
         add(topPanel, BorderLayout.NORTH);

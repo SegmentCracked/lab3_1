@@ -10,6 +10,7 @@ public abstract class Page {
 	String pageName;
 	int type;
 	int timeLimit;
+	String author;
 	public static final String TYPE_LIST[]=new String[]{"survey","test"};
 	
 	List<Question> questionList = new LinkedList<Question>();
@@ -85,4 +86,13 @@ public abstract class Page {
 	public void setTimeLimit(int timeLimit) {
 		this.timeLimit = timeLimit;
 	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 }
+

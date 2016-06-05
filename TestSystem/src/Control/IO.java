@@ -130,6 +130,7 @@ public class IO {
 		}
 		page.setPageName(pageName);
 		System.out.println(page.getPageName());
+		page.setAuthor(root.getChildText("author"));
 		page.setTimeLimit(Integer.parseInt(root.getChild("timeLimit").getText()));
 		Element questions =  root.getChild("questions");
 		List<Element> questionList = questions.getChildren();
@@ -240,6 +241,7 @@ public class IO {
 		Element root = new Element("paper.Page");
 		root.setAttribute("type", page.getType());
 		root.addContent(new Element("pageName").setText(page.getPageName()));
+		root.addContent(new Element("author").setText(page.getAuthor()));
 		root.addContent(new Element("timeLimit").setText(String.valueOf(page.getTimeLimit())));
 		if(page.getType().equals("test")){
 			root.addContent(new Element("score").setText(((Test)page).getTotalScore()+""));

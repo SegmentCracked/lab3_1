@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <paper.Page type="survey">
   <pageName>Test3</pageName>
+  <author>MXLin</author>
   <timeLimit>1</timeLimit>
   <questions>
     <question type="4" isScore="1" answer="1">

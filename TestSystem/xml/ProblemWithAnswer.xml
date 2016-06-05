@@ -3,6 +3,7 @@
   <pageName>ProblemWithAnswer</pageName>
   <timeLimit>5</timeLimit>
   <score>1</score>
+  <author>MXLin</author>
   <questions>
     <question type="0" isScore="1" answer="1">
       <prompt>Hello</prompt>

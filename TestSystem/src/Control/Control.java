@@ -211,6 +211,9 @@ public class Control implements Controller {
 	}
 	public String getOutcome(int index, int type){
 		this.loadPage(index, type);
+		return getOutcome();
+	}
+	public String getOutcome(){
 		loadRecord();
 		List<Iterator<Answer>> recordList = new LinkedList<Iterator<Answer>>();
 		for(int i=0; i<recordName.size(); i++){
