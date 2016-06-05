@@ -3,6 +3,7 @@ package gui.questionshower;
 import Paper.Page;
 import Question.Question;
 import answer.Answer;
+import gui.util.PageAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,12 +31,8 @@ public class CoverShower extends QuestionShower {
         add(inputPanel, BorderLayout.SOUTH);
     }
     public void parseMetaInformation(Page page){
-        StringBuilder content = new StringBuilder();
-        content.append("Page Name: ");
-        content.append(page.getPageName());
-        content.append("\nQuestion Count: ");
-        content.append(page.getQuestionSize());
-        coverContent.setText(content.toString());
+        PageAdapter pageAdapter = new PageAdapter(0, page);
+        coverContent.setText(pageAdapter.toString());
     }
 
     @Override

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paper.Page type="test">
+  <pageName>TestForMap</pageName>
+  <timeLimit>0</timeLimit>
+  <score>5</score>
+  <questions>
+    <question type="5" isScore="1" answer="1">
+      <prompt>Map Problem</prompt>
+      <side1>
+        <left>Red</left>
+        <left>Blue</left>
+      </side1>
+      <side2>
+        <right>1</right>
+        <right>2</right>
+      </side2>
+      <answer>0 1</answer>
+      <score>1</score>
+    </question>
+    <question type="3" isScore="0" answer="0">
+      <prompt>EsEssaysayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssayEssay</prompt>
+    </question>
+  </questions>
+</paper.Page>
+

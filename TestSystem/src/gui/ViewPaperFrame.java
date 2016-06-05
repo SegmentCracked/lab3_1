@@ -5,6 +5,7 @@ import Control.QuestionControl;
 import Paper.Page;
 import Paper.Record;
 import Paper.Test;
+import gui.util.PageAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,11 +40,8 @@ public class ViewPaperFrame extends JFrame{
         ret.add(new JLabel("Information:"),BorderLayout.NORTH);
         JTextArea infoTextArea = new JTextArea();
         final Page pageToShow = Control.getInstance().getPage();
-        StringBuilder infoStrBuilder= new StringBuilder();
-        infoStrBuilder.append("Page Name: ").append(pageToShow.getPageName());
-        infoStrBuilder.append("\n");
-        infoStrBuilder.append("Question Count: ").append(pageToShow.getQuestionSize());
-        infoTextArea.setText(infoStrBuilder.toString());
+        PageAdapter pageAdapter= new PageAdapter(0, pageToShow);
+        infoTextArea.setText(pageAdapter.toString());
         infoTextArea.setEditable(false);
         ret.add(infoTextArea, BorderLayout.CENTER);
         return ret;

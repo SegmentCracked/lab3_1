@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.URL;
 
 /**
  * Created by Mengxiao Lin on 2016/5/29.
@@ -77,8 +78,14 @@ public class MainMenuFrame extends JFrame {
         add(createBtnPanel(),BorderLayout.SOUTH);
         pack();
         setTitle("Test System");
+        URL url = getClass().getResource("/images/logo.png");
+        ImageIcon logo= new ImageIcon(url,"logo");
+        JLabel logoLabel = new JLabel(logo,JLabel.CENTER);
+        logoLabel.setPreferredSize(new Dimension(logo.getIconWidth(), logo.getIconHeight()));
+        add(logoLabel, BorderLayout.CENTER);
         setMinimumSize(new Dimension(400,200));
         setLocationRelativeTo(null);
+        pack();
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }

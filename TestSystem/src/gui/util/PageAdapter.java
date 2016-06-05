@@ -25,9 +25,11 @@ public class PageAdapter {
         String ret = "Page Name: "+name +"\nType: ";
         if (type == SURVEY) ret+="Survey";
         if (type == TEST) ret+="Test";
-        ret+="\nTime Limit: ";
-        ret+= timeLimit;
-        ret+=" min";
+        if (timeLimit!=0) {
+            ret += "\nTime Limit: ";
+            ret += timeLimit;
+            ret += " min";
+        }
         return ret;
     }
 

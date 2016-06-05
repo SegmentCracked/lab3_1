@@ -17,10 +17,11 @@ public class EssayQuestionShower extends QuestionShower {
         promptLabel = new JTextArea(questionToShow.getPrompt());
         promptLabel.setEditable(false);
         promptLabel.setBackground(this.getBackground());
+        promptLabel.setLineWrap(true);
         answerTextArea = new JTextArea();
         answerTextArea.setLineWrap(true);
-        add(promptLabel, BorderLayout.NORTH);
-        add(answerTextArea, BorderLayout.CENTER);
+        add(new JScrollPane(promptLabel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.NORTH);
+        add(new JScrollPane(answerTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
     }
 
     @Override

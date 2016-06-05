@@ -21,7 +21,9 @@ public class EssayQuestionFrame extends QuestionFrame {
         JPanel ret = new JPanel(new BorderLayout());
         promptTextArea = new JTextArea();
         ret.add(new JLabel("Essay:"), BorderLayout.NORTH);
-        ret.add(promptTextArea, BorderLayout.CENTER);
+        JScrollPane pane = new JScrollPane(promptTextArea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        promptTextArea.setLineWrap(true);
+        ret.add(pane, BorderLayout.CENTER);
         return ret;
     }
     public EssayQuestionFrame(boolean hasAnswer) {
@@ -31,6 +33,7 @@ public class EssayQuestionFrame extends QuestionFrame {
         add(createBottomPanel(), BorderLayout.SOUTH);
         QuestionFactory factory = new QuestionFactory();
         setQuestion(factory.createQuestion(QuestionFactory.QuestionType.ESSAY));
+        setMinimumSize(new Dimension(400,300));
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +46,9 @@ public class EssayQuestionFrame extends QuestionFrame {
             public void actionPerformed(ActionEvent e) {
                 question.setPrompt(promptTextArea.getText());
                 EssayQuestionFrame.this.setVisible(false);
+                if (isHasAnswer()){
+                    question.setScore(EssayQuestionFrame.this.getScoreValue());
+                }
             }
         });
         addWindowListener(new WindowAdapter() {
@@ -56,7 +62,7 @@ public class EssayQuestionFrame extends QuestionFrame {
 
     @Override
     public Question getQuestion() {
-        return null;
+        return question;
     }
 
     @Override

@@ -35,6 +35,9 @@ public class MapQuestionShower extends QuestionShower {
                 int selectedIndex = itemList.getSelectedIndex();
                 MapItemAdapter item = itemListModel.get(selectedIndex);
                 String[] choices = new String[question.getSide2().size()];
+                for (int i=0;i<question.getSide2().size();++i){
+                    choices[i]=question.getSide2().get(i);
+                }
                 String answer = ComboBoxDialog.getChoice(MapQuestionShower.this, "Please choose the answer of "+item.getLeftItem()+".", choices, item.getRightItem());
                 item.setRightItem(answer);
                 itemList.setModel(itemListModel);
@@ -62,6 +65,21 @@ public class MapQuestionShower extends QuestionShower {
 
     @Override
     public String getAnswer() {
-        return null;
+        int answerIndices[] = new int[itemListModel.size()];
+        for (int i=0;i<answerIndices.length;++i){
+            String targetItem = itemListModel.get(i).getRightItem();
+            for (int j=0;i<question.getSide2().size();++j){
+                if (question.getSide2().get(i).equals(targetItem)){
+                    answerIndices[i]=j;
+                    break;
+                }
+            }
+        }
+        StringBuilder answerStrBuilder = new StringBuilder();
+        for (int i=0;i<answerIndices.length;++i){
+            answerStrBuilder.append(answerIndices[i]);
+            answerStrBuilder.append(" ");
+        }
+        return answerStrBuilder.toString();
     }
 }

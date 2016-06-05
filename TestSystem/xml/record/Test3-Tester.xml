@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paper.Record>
+  <PersonName>Tester</PersonName>
+  <score>0</score>
+  <answers>
+    <answer type="4">1 2 0</answer>
+    <answer type="0">2</answer>
+  </answers>
+</paper.Record>
+

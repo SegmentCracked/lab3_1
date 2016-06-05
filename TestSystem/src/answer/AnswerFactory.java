@@ -39,7 +39,7 @@ public class AnswerFactory {
         if (question instanceof ChoiceQuestion) ret= new ChoiceAnswer();
         if (question instanceof MapQuestion) ret= new MapAnswer();
         if (question instanceof RankQuestion) ret= new RankAnswer();
-        if (question instanceof TextAnswer) ret = new TextAnswer();
+        if (question instanceof EssayQuestion) ret = new TextAnswer();
         if (ret!=null) ret.setAnswer(answerStr);
         return ret;
     }

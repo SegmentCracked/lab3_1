@@ -4,5 +4,6 @@
   <pageName type="survey">Test2</pageName>
   <pageName type="survey">Test3</pageName>
   <pageName type="test">ProblemWithAnswer</pageName>
+  <pageName type="test">TestForMap</pageName>
 </totalInfo>
 
